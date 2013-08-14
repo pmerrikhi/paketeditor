@@ -136,7 +136,9 @@ namespace DXUnionPacket.DataModel
 	}
 	public class Database : SQLiteConnection
 	{
-		public Database () : base(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(typeof(Database).Assembly.Location),@"db\samples.db"))
+		public Database () : base(
+			System.IO.Path.Combine(System.IO.Path.GetDirectoryName(typeof(Database).Assembly.Location),@"db\samples.db")
+		)
 		{
 			CreateTable<Sample> ();
 			
@@ -237,7 +239,7 @@ namespace DXUnionPacket.DataModel
 		public Sample QuerySample(String name){
 			var t = this.Table<Sample>();
 			if (t != null) {
-				var ss = t.Where<Sample>(  s =>  s.Name.Equals(name.ToString())       );
+				var ss = t.Where<Sample>(  s => !String.IsNullOrEmpty(s.Name) && s.Name.Equals(name.ToString())       );
 				if(ss != null && ss.Count() > 0){
 					return ss.FirstOrDefault();
 				}else{
