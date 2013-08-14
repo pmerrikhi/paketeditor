@@ -42,8 +42,8 @@ namespace DXUnionPacket.UserControl
 			this.DataContext = this.VM;
 			samplesTreeView.SelectedItemChanged += delegate(object sender, RoutedPropertyChangedEventArgs<object> e) 
 			{
-				e.ToString();
 				VM.SampleList.CurrentItem = e.NewValue as Sample;
+				VM.Mediator.NotifyColleaguesAsync("SampleTextEditor.CurrentItem", e.NewValue);
 			};
 		}
 	}

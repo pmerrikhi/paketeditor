@@ -17,9 +17,9 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-
 using AvalonDock;
 using DXUnionPacket.ViewModel;
+using MVVm.Core;
 
 namespace DXUnionPacket.UserControl
 {
@@ -44,33 +44,24 @@ namespace DXUnionPacket.UserControl
 		{
 			try{
 				InitializeComponent();
-				VM.SampleList.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs e)
-				{
-					e.ToString();
-				};
-				VM.SampleList.DefaultView.CurrentChanged += delegate(object sender, EventArgs e)
-				{
-					this.DataContext = VM.SampleList.CurrentItem;
-				};
-				VM.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
-				{
-					e.ToString();
-				};
-			
-				
-				this.DataContext = VM.SampleList.CurrentItem;
-				textEditor.Text = VM.SampleList.CurrentItem.Text;
-				var c = VM.SampleList.CurrentItem.Children;
-				int count = c.Count;
+				VM.Mediator.Register(this);
+				this.textEditor.Text = VM.SampleList.CurrentItem.Text;
 			}catch(Exception ex)
 			{
 				ex.StackTrace.ToLower();
 			}
 		}
 		
+		
 		void TextEditor_TextChanged(object sender, EventArgs e)
 		{
 			this.VM.SampleList.CurrentItem.Text = textEditor.Text;
+		}
+		[MediatorMessageSink("SampleTextEditor.CurrentItem")]
+		private void SamplesCurrent(object o)
+		{
+			this.DataContext  = VM.SampleList.CurrentItem;
+			this.textEditor.Text = VM.SampleList.CurrentItem.Text;
 		}
 	}
 }
