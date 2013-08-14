@@ -1,0 +1,22 @@
+﻿<ad:DockableContent x:Class="DXUnionPacket.UserControl.SampleTextEditor"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+	Selector.IsSelected="True"
+	Name="textEditorContent"
+	Title="{Binding Path=T.MF_TAB_TITLE_EKB}"
+	FloatingWindowSizeToContent="WidthAndHeight">
+	
+	<!--	IsBusy="{Binding ElementName=ucekbX, Path=VM.IsBusy}"
+								BusyContent="{Binding ElementName=ucekbX, Path=VM.BusyMessage}">-->
+					<avedit:TextEditor
+						Name="textEditor"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						SyntaxHighlighting="VBNET"
+						FontSize="12pt"
+						FontFamily="Consolas"
+						TextChanged="TextEditor_TextChanged"
+						></avedit:TextEditor>
+</ad:DockableContent >

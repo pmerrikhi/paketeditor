@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="DXUnionPacket.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"	
+	xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
+	Title="DXUnionPacket">
+	<ad:DockingManager
+		UseLayoutRounding="True">
+		<ad:ResizingPanel
+			Name="RPMain"
+			Orientation="Horizontal">
+			<ad:DockablePane
+				Name="DP1"
+				ShowHeader="True">
+				<uc:SampleTextEditor />
+			</ad:DockablePane>
+		</ad:ResizingPanel>
+	</ad:DockingManager>
+</Window>

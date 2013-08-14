@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.3
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXUnionPacket", "DXUnionPacket\DXUnionPacket.csproj", "{CFF05790-E8E2-48EB-942E-DF53228084FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXSampleImporter", "DXSampleImporter\DXSampleImporter.csproj", "{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFF05790-E8E2-48EB-942E-DF53228084FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF05790-E8E2-48EB-942E-DF53228084FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF05790-E8E2-48EB-942E-DF53228084FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF05790-E8E2-48EB-942E-DF53228084FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
