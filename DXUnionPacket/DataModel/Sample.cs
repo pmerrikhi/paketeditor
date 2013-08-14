@@ -156,17 +156,21 @@ namespace DXUnionPacket.DataModel
 			if(modifiedBefore == null)
 				modifiedBefore = DateTime.Now;
 			try{
-				var rr = Table<Sample>();
+				var rr = Table<Sample>().Where<Sample>( xxx => xxx.Name !=null);
 				foreach(Sample ss in rr)
 				{
 					ss.ToString();
-					if(ss.Name.ToLower().Contains("".ToLower()))
-					{
-						ss.ToString();
+					try{
+						if(ss.Name.ToLower().Contains("".ToLower()))
+						{
+							ss.ToString();
+						}
+					}catch(Exception ex){
+						ex.StackTrace.ToLower();
 					}
-					
 				}
 				var r =  Table<Sample>().Where<Sample>(xx =>
+				                                       xx.Name != null && 
 				                                       (
 				                                       	name != null &&  xx.Name != null && xx.Name.ToLower().Contains(name.ToLower())
 				                                       	||

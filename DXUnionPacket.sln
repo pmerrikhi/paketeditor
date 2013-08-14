@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXUnionPacket", "DXUnionPac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXSampleImporter", "DXSampleImporter\DXSampleImporter.csproj", "{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVm.View", "..\..\dot_net\EKR\Codice\EKR.3rd.Party.Libs\MVVm\MVVm.View\MVVm.View.csproj", "{D8E71F2F-C4EC-4C82-9298-E785C15BB6A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVm", "..\..\dot_net\EKR\Codice\EKR.3rd.Party.Libs\MVVm\MVVm\MVVm.csproj", "{4350EC33-498C-4B8B-981B-B955DF3D7669}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,5 +24,13 @@ Global
 		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED25D4CF-E8C5-4126-B27F-E1A249D0B70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8E71F2F-C4EC-4C82-9298-E785C15BB6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8E71F2F-C4EC-4C82-9298-E785C15BB6A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8E71F2F-C4EC-4C82-9298-E785C15BB6A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8E71F2F-C4EC-4C82-9298-E785C15BB6A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4350EC33-498C-4B8B-981B-B955DF3D7669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4350EC33-498C-4B8B-981B-B955DF3D7669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4350EC33-498C-4B8B-981B-B955DF3D7669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4350EC33-498C-4B8B-981B-B955DF3D7669}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

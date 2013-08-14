@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using MVVm.Core;
@@ -28,18 +29,18 @@ namespace DXUnionPacket.ViewModel
 		}
 		
 		
-		private ObservableCollectionWithCurrent<Sample> _sampleList;
+		private readonly ObservableCollectionWithCurrent<Sample> _sampleList  = new ObservableCollectionWithCurrent<Sample>();
 		public ObservableCollectionWithCurrent<Sample> SampleList
 		{
 			get{
-				if(_sampleList == null)
+				if(_sampleList.Count == 0)
 				{
-					_sampleList = new ObservableCollectionWithCurrent<Sample>();
 					IEnumerable<DataModel.Sample> tmp_samples = _db.QuerySamples("","","","");
 					foreach(DataModel.Sample s in tmp_samples)
 					{
 						_sampleList.Add(new Sample(s));
 					}
+
 				}
 				return _sampleList;
 			}
@@ -102,7 +103,7 @@ namespace DXUnionPacket.ViewModel
 		}
 		public Samples()
 		{
-		
+			
 		}
 	}
 	public static class SamplesExtensions
@@ -110,8 +111,14 @@ namespace DXUnionPacket.ViewModel
 		
 		public static IEnumerable<Sample> GetChildren(this Samples samples, Sample s)
 		{
-			var t = samples.SampleList.Where(xx => xx.Parent == s.Parent + "." + s.Name);
-			return t;
+			if(String.IsNullOrEmpty(s.Parent))
+			{
+				var t = samples.SampleList.Where(xx => xx.Parent == s.Name);
+				return t;
+			}else{
+				var t = samples.SampleList.Where(xx => xx.Parent == s.Parent + "." + s.Name);
+				return t;
+			}
 		}
 	}
 }

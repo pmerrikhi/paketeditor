@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
@@ -43,16 +44,24 @@ namespace DXUnionPacket.UserControl
 		{
 			try{
 				InitializeComponent();
+				VM.SampleList.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs e)
+				{
+					e.ToString();
+				};
 				VM.SampleList.DefaultView.CurrentChanged += delegate(object sender, EventArgs e)
 				{
 					this.DataContext = VM.SampleList.CurrentItem;
 				};
 				VM.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
 				{
-					
+					e.ToString();
 				};
+			
+				
 				this.DataContext = VM.SampleList.CurrentItem;
 				textEditor.Text = VM.SampleList.CurrentItem.Text;
+				var c = VM.SampleList.CurrentItem.Children;
+				int count = c.Count;
 			}catch(Exception ex)
 			{
 				ex.StackTrace.ToLower();

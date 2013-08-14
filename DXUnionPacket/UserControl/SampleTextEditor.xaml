@@ -4,8 +4,7 @@
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 	Selector.IsSelected="True"
-	Name="textEditorContent"
-	Title="{Binding Path=T.MF_TAB_TITLE_EKB}"
+	Name="samplesTextEditorDockableContent"
 	FloatingWindowSizeToContent="WidthAndHeight">
 	
 	<!--	IsBusy="{Binding ElementName=ucekbX, Path=VM.IsBusy}"
