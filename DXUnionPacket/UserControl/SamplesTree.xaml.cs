@@ -25,25 +25,21 @@ namespace DXUnionPacket.UserControl
 	/// </summary>
 	public partial class SamplesTree : DockableContent
 	{
-		private ViewModel.Samples _vm;
 		public ViewModel.Samples VM
 		{
 			get{
-				if(_vm == null)
-				{
-					_vm = StructureMap.ObjectFactory.GetInstance<ViewModel.Samples>();
-				}
-				return _vm;
+				return StructureMap.ObjectFactory.GetInstance<ViewModel.Samples>();
+				
 			}
 		}
 		public SamplesTree()
 		{
 			InitializeComponent();
 			this.DataContext = this.VM;
-			samplesTreeView.SelectedItemChanged += delegate(object sender, RoutedPropertyChangedEventArgs<object> e) 
+			samplesTreeView.SelectedItemChanged += delegate(object sender, RoutedPropertyChangedEventArgs<object> e)
 			{
 				VM.SampleList.CurrentItem = e.NewValue as Sample;
-				VM.Mediator.NotifyColleaguesAsync("SampleTextEditor.CurrentItem", e.NewValue);
+				VM.Mediator.NotifyColleagues("SampleTextEditor.CurrentItem", e.NewValue);
 			};
 		}
 	}

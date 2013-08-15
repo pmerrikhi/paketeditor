@@ -8,7 +8,9 @@
  */
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
+
 using MVVm.Core;
 
 namespace DXUnionPacket.ViewModel
@@ -154,6 +156,10 @@ namespace DXUnionPacket.ViewModel
 		public Sample(DataModel.Sample sample)
 		{
 			this.sample = sample;
+			this.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e) 
+			{
+				this.sample.Update(true);
+			};
 		}
 		public Sample()  :this(new DataModel.Sample())
 		{

@@ -18,11 +18,24 @@
 				ShowHeader="True">
 				<uc:SamplesTree />
 			</ad:DockablePane>
-			<ad:DockablePane
-				Name="DP1"
-				ShowHeader="True">
-				<uc:SampleTextEditor />
-			</ad:DockablePane>
+			
+			<ad:ResizingPanel
+				Name="RPSide"
+				Orientation="Vertical">
+				<ad:DockablePane
+					Name="DP1"
+					ShowHeader="True">
+					<ad:DockableContent>
+						<uc:SampleDescriptionControl/>
+					</ad:DockableContent>
+				</ad:DockablePane>
+				<ad:DockablePane
+					Name="DP2"
+					ShowHeader="True">
+					<uc:SampleTextEditor />
+				
+				</ad:DockablePane>
+			</ad:ResizingPanel>
 		</ad:ResizingPanel>
 	</ad:DockingManager>
 </Window>

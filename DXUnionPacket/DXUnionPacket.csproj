@@ -93,6 +93,7 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BraceFoldingStrategy.cs" />
     <Compile Include="DataModel\Sample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
@@ -102,6 +103,10 @@
     </Compile>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="UserControl\SampleDescriptionControl.xaml.cs">
+      <DependentUpon>SampleDescriptionControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UserControl\SamplesTree.xaml.cs">
       <DependentUpon>SamplesTree.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -115,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
+    <Page Include="UserControl\SampleDescriptionControl.xaml" />
     <Page Include="UserControl\SamplesTree.xaml" />
     <Page Include="UserControl\SampleTextEditor.xaml" />
   </ItemGroup>
@@ -126,6 +132,15 @@
     <None Include="db\samples2.dat">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\Cut.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Open.png" />
+    <Resource Include="Images\Paste.png" />
+    <Resource Include="Images\Redo.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\Undo.png" />
+    <Resource Include="Images\WordWrap.png" />
     <None Include="lib\AvalonDock.dll" />
     <None Include="lib\AvalonDock.Themes.dll" />
     <None Include="lib\GongSolutions.Wpf.DragDrop.dll" />
@@ -144,6 +159,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images" />
     <Folder Include="lib" />
     <Folder Include="DataModel" />
     <Folder Include="db" />

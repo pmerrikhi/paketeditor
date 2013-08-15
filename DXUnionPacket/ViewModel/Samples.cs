@@ -21,6 +21,7 @@ namespace DXUnionPacket.ViewModel
 	/// </summary>
 	public class Samples :MediatorEnabledViewModel<object>
 	{
+		public static int instance_count;
 		private DataModel.Database _db
 		{
 			get{
@@ -28,7 +29,18 @@ namespace DXUnionPacket.ViewModel
 			}
 		}
 		
-		
+		private ObservableCollectionWithCurrent<Sample> _sampleTree;
+		public ObservableCollectionWithCurrent<Sample> SampleTree
+		{
+			get{
+				if(_sampleTree == null)
+				{
+					_sampleTree = new ObservableCollectionWithCurrent<Sample>(SampleList.Where(xx => String.IsNullOrWhiteSpace(xx.Parent)));
+					
+				}
+				return _sampleTree;
+			}
+		}
 		private readonly ObservableCollectionWithCurrent<Sample> _sampleList  = new ObservableCollectionWithCurrent<Sample>();
 		public ObservableCollectionWithCurrent<Sample> SampleList
 		{
@@ -103,7 +115,7 @@ namespace DXUnionPacket.ViewModel
 		}
 		public Samples()
 		{
-			
+			instance_count++;
 		}
 	}
 	public static class SamplesExtensions

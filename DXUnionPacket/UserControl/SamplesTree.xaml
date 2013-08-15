@@ -2,17 +2,20 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+	xmlns:dx="clr-namespace:DXUnionPacket.ViewModel"
 	Name="samplesTreeViewDockableContent"
 	FloatingWindowSizeToContent="WidthAndHeight">
 	<ad:DockableContent.Resources>
-	
+		<HierarchicalDataTemplate DataType="{x:Type dx:Sample}" ItemsSource="{Binding Children}">
+			<TextBlock Text="{Binding Name}" />
+		</HierarchicalDataTemplate>
 	</ad:DockableContent.Resources>
 	<DockPanel>
 		<TreeView Name="samplesTreeView"
-		
-			ItemsSource="{Binding SampleList}"
+		          
+		          ItemsSource="{Binding SampleTree}"
 		>
-			
+		
 		</TreeView>
 	</DockPanel>
 </ad:DockableContent>
