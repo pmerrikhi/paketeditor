@@ -34,13 +34,18 @@ namespace DXUnionPacket.UserControl
 		}
 		public SamplesTree()
 		{
-			InitializeComponent();
-			this.DataContext = this.VM;
-			samplesTreeView.SelectedItemChanged += delegate(object sender, RoutedPropertyChangedEventArgs<object> e)
+			try{
+				InitializeComponent();
+				this.DataContext = this.VM;
+				samplesTreeView.SelectedItemChanged += delegate(object sender, RoutedPropertyChangedEventArgs<object> e)
+				{
+					VM.SampleList.CurrentItem = e.NewValue as Sample;
+					VM.Mediator.NotifyColleagues("SampleTextEditor.CurrentItem", e.NewValue);
+				};
+			}catch(Exception ex)
 			{
-				VM.SampleList.CurrentItem = e.NewValue as Sample;
-				VM.Mediator.NotifyColleagues("SampleTextEditor.CurrentItem", e.NewValue);
-			};
+				ex.StackTrace.ToLower();
+			}
 		}
 	}
 }

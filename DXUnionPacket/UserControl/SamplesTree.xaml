@@ -3,6 +3,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:dx="clr-namespace:DXUnionPacket.ViewModel"
+	xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
+	xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
 	Name="samplesTreeViewDockableContent"
 	FloatingWindowSizeToContent="WidthAndHeight">
 	<ad:DockableContent.Resources>
@@ -14,6 +16,11 @@
 		<TreeView Name="samplesTreeView"
 		          
 		          ItemsSource="{Binding SampleTree}"
+		          
+		          dd:DragDrop.DragHandler="{Binding }"
+		          dd:DragDrop.DropHandler="{Binding }"
+		          dd:DragDrop.IsDragSource="True"
+		          dd:DragDrop.IsDropTarget="True"
 		>
 		
 		</TreeView>

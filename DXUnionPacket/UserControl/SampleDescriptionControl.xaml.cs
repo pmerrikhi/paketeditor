@@ -43,7 +43,7 @@ namespace DXUnionPacket.UserControl
 		private void SamplesCurrent(object o)
 		{
 			this.DataContext  = VM.SampleList.CurrentItem;
-			this.textEditor.Text = VM.SampleList.CurrentItem.Text;
+			this.textEditor.Text = VM.SampleList.CurrentItem.Description;
 		}
 		
 	}

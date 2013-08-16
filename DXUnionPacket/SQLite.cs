@@ -1395,7 +1395,8 @@ namespace SQLite
 					var r = SQLite3.Close (Handle);
 					if (r != SQLite3.Result.OK) {
 						string msg = SQLite3.GetErrmsg (Handle);
-						throw SQLiteException.New (r, msg);
+						Thread.Sleep(100);
+						//throw SQLiteException.New (r, msg);
 					}
 				}
 				finally {

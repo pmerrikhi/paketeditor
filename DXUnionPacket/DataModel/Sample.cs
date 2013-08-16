@@ -24,6 +24,18 @@ namespace DXUnionPacket.DataModel
 	/// </summary>
 	public class Sample
 	{
+		private BackgroundWorker _bw;
+		private BackgroundWorker bw
+		{
+			get{
+				if(_bw == null)
+				{
+					_bw = new BackgroundWorker();
+				}
+				return _bw;
+			}
+		}
+		
 		private DXUnionPacket.DataModel.Database _db
 		{
 			get{
@@ -60,16 +72,22 @@ namespace DXUnionPacket.DataModel
 		
 		public bool Update(bool tryInsert = true)
 		{
-			this.DateModified = DateTime.Now;
-			int r = _db.Update(this);
-			if(r > 0){
-				return true;
-			}else if(tryInsert){
-				return this.Insert();
-			}else{
-				return false;
+			try{
+				this.DateModified = DateTime.Now;
+				int r = _db.Update(this);
+				if(r > 0){
+					return true;
+				}else if(tryInsert){
+					return this.Insert();
+				}else{
+					return false;
+				}
 			}
-			
+			catch(Exception ex)
+			{
+				ex.StackTrace.ToLower();
+			}
+			return false;
 		}
 		public bool Insert()
 		{
@@ -92,7 +110,73 @@ namespace DXUnionPacket.DataModel
 				return false;
 			}
 		}
-		
+		public void UpdateAsync(bool tryInsert = true)
+		{
+			try{
+				this.DateModified = DateTime.Now;
+				bw.DoWork += delegate(object sender, DoWorkEventArgs e)
+				{
+					int r = _db.Update(this);
+					if(r > 0){
+						e.Result =   true;
+					}else if(tryInsert){
+						e.Result =  this.Insert();
+					}else{
+						e.Result =   false;
+					}
+				};
+				bw.RunWorkerAsync();
+			}
+			catch(Exception ex)
+			{
+				ex.StackTrace.ToLower();
+			}
+		}
+		public void InsertAsync()
+		{
+			
+			try{
+				this.DateModified = DateTime.Now;
+				bw.DoWork += delegate(object sender, DoWorkEventArgs e)
+				{
+					int r = _db.Insert(this);
+					if(r > 0)
+					{
+						e.Result =  true;
+					}else{
+						e.Result =   false;
+					}
+				};
+				bw.RunWorkerAsync();
+			}
+			catch(Exception ex)
+			{
+				ex.StackTrace.ToLower();
+			}
+		}
+		public void DeleteAsync()
+		{
+			try{
+				
+				
+				this.DateModified = DateTime.Now;				
+				bw.DoWork += delegate(object sender, DoWorkEventArgs e)
+				{
+					int r = _db.Delete(this);
+					if(r > 0)
+					{
+						e.Result =  true;
+					}else{
+						e.Result =   false;
+					}
+				};
+				bw.RunWorkerAsync();
+			}
+			catch(Exception ex)
+			{
+				ex.StackTrace.ToLower();
+			}
+		}
 		public int AddChildren(IEnumerable<Sample> children)
 		{
 			int r = 0;
@@ -172,7 +256,7 @@ namespace DXUnionPacket.DataModel
 					}
 				}
 				var r =  Table<Sample>().Where<Sample>(xx =>
-				                                       xx.Name != null && 
+				                                       xx.Name != null &&
 				                                       (
 				                                       	name != null &&  xx.Name != null && xx.Name.ToLower().Contains(name.ToLower())
 				                                       	||

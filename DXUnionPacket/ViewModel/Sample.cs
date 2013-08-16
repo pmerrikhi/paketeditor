@@ -103,9 +103,13 @@ namespace DXUnionPacket.ViewModel
 					_children =  new ObservableCollectionWithCurrent<Sample>();
 				}
 				var c = _samples.GetChildren(this);
+				_children.Clear();
 				foreach(Sample s in c)
 				{
-					_children.Add(s);
+					if(!_children.Contains(s))
+					{
+						_children.Add(s);
+					}
 				}
 				return _children;
 			}
@@ -156,9 +160,16 @@ namespace DXUnionPacket.ViewModel
 		public Sample(DataModel.Sample sample)
 		{
 			this.sample = sample;
-			this.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e) 
+			this.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
 			{
-				this.sample.Update(true);
+				 this.sample.UpdateAsync(true);
+				//this.sample = _db.QuerySample(this.sample.Id);
+//				this._samples.SampleList.Insert(this._samples.SampleList.CurrentPosition, this);
+//				if(!_samples.SampleList.Contains(this))
+//				{
+//					_samples.SampleList.Insert(_samples.SampleList.CurrentPosition, this);
+//				//	_samples.SampleList.MoveCurrentTo(this);
+//				}
 			};
 		}
 		public Sample()  :this(new DataModel.Sample())

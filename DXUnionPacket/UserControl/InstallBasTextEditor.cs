@@ -32,7 +32,7 @@ namespace DXUnionPacket.UserControl
 	/// <summary>
 	/// Interaction logic for SampleTextEditor.xaml
 	/// </summary>
-	public partial class SampleTextEditor : DockableContent
+	public partial class InstallBasTextEditor : DockableContent
 	{
 		
 		public Samples VM
@@ -42,7 +42,7 @@ namespace DXUnionPacket.UserControl
 				
 			}
 		}
-		public SampleTextEditor()
+		public InstallBasTextEditor()
 		{
 			try{
 				InitializeComponent();

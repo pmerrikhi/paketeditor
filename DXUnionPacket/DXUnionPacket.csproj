@@ -103,6 +103,9 @@
     </Compile>
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="UserControl\InstallBasTextEditor.cs">
+      <DependentUpon>InstallBasTextEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\SampleDescriptionControl.xaml.cs">
       <DependentUpon>SampleDescriptionControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -120,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
+    <Page Include="UserControl\InstallBasTextEditor.xaml" />
     <Page Include="UserControl\SampleDescriptionControl.xaml" />
     <Page Include="UserControl\SamplesTree.xaml" />
     <Page Include="UserControl\SampleTextEditor.xaml" />
@@ -127,7 +131,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="db\samples.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="db\samples2.dat">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
