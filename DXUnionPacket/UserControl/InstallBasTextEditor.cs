@@ -22,6 +22,7 @@ using System.Windows.Media;
 using AvalonDock;
 using AvalonEdit.Sample;
 using DXUnionPacket.ViewModel;
+using GongSolutions.Wpf.DragDrop;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Microsoft.Win32;
@@ -32,24 +33,25 @@ namespace DXUnionPacket.UserControl
 	/// <summary>
 	/// Interaction logic for SampleTextEditor.xaml
 	/// </summary>
-	public partial class InstallBasTextEditor : DockableContent
+	public partial class InstallBasTextEditor : DockableContent, IDropTarget
 	{
 		
-		public Samples VM
-		{
-			get{
-				return  StructureMap.ObjectFactory.GetInstance<DXUnionPacket.ViewModel.Samples>();
-				
-			}
-		}
+//		public Samples VM
+//		{
+//			get{
+//				return  StructureMap.ObjectFactory.GetInstance<DXUnionPacket.ViewModel.Samples>();
+//
+//			}
+//		}
 		public InstallBasTextEditor()
 		{
 			try{
 				InitializeComponent();
-				VM.Mediator.Register(this);
-				this.isAnotherItem = true;
-				this.textEditor.Text = VM.SampleList.CurrentItem.Text;
-				this.isAnotherItem = false;
+				this.DataContext = this;
+//				VM.Mediator.Register(this);
+//				this.isAnotherItem = true;
+//				this.textEditor.Text = VM.SampleList.CurrentItem.Text;
+//				this.isAnotherItem = false;
 			}catch(Exception ex)
 			{
 				
@@ -63,17 +65,10 @@ namespace DXUnionPacket.UserControl
 		{
 			if(!isAnotherItem)
 			{
-				this.VM.SampleList.CurrentItem.Text = textEditor.Text;
+//				this.VM.SampleList.CurrentItem.Text = textEditor.Text;
 			}
 		}
-		[MediatorMessageSink("SampleTextEditor.CurrentItem")]
-		private void SamplesCurrent(object o)
-		{
-			this.DataContext  = VM.SampleList.CurrentItem;
-			isAnotherItem = true;
-			this.textEditor.Text = VM.SampleList.CurrentItem.Text;
-			isAnotherItem = false;
-		}
+
 		
 		string currentFileName;
 		
@@ -155,6 +150,41 @@ namespace DXUnionPacket.UserControl
 			}else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
 			{
 				textEditor.FontSize -= 1;
+			}
+		}
+		void installBas(object sender, EventArgs e)
+		{
+			
+		}
+		void removeBas(object sender, EventArgs e)
+		{
+			
+		}
+		void IDropTarget.Drop(DropInfo dropInfo)
+		{
+			if(dropInfo.Data != null )
+			{
+				if(dropInfo.Data is Sample ){
+					try
+					{
+						Sample sample = dropInfo.Data as Sample;
+						textEditor.Text += sample.Text;
+					}
+					catch(Exception ex)
+					{
+						ex.StackTrace.ToLower();
+					}
+				}
+			}
+		}
+		void IDropTarget.DragOver(DropInfo dropInfo)
+		{
+			if(dropInfo.Data != null )
+			{
+				if(dropInfo.Data is Sample ){
+					dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+					dropInfo.Effects = DragDropEffects.Copy;
+				}
 			}
 		}
 	}
