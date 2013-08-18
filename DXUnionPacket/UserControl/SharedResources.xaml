@@ -33,6 +33,25 @@
 		<uc:UICultureString UICulture="en-US" Value="BAS" />
 		<uc:UICultureString UICulture="de-DE" Value="BAS"/>
 	</uc:UIString>
+	
+	<uc:UIString  x:Key="button_save">
+		<uc:UICultureString UICulture="en-US" Value="Save" />
+		<uc:UICultureString UICulture="de-DE" Value="Speichern"/>
+	</uc:UIString>
+	<uc:UIString  x:Key="button_save_as">
+		<uc:UICultureString UICulture="en-US" Value="Save As" />
+		<uc:UICultureString UICulture="de-DE" Value="Speichern Als"/>
+	</uc:UIString>
+	<uc:UIString  x:Key="button_bas_install">
+		<uc:UICultureString UICulture="en-US" Value="Install bas" />
+		<uc:UICultureString UICulture="de-DE" Value="Einspielungsbas"/>
+	</uc:UIString>
+	<uc:UIString  x:Key="button_bas_remove">
+		<uc:UICultureString UICulture="en-US" Value="Remove bas" />
+		<uc:UICultureString UICulture="de-DE" Value="Deinstallierungsbas"/>
+	</uc:UIString>
+	
+	
 	<Style
 		TargetType="{x:Type Image}">
 		<Style.Triggers>

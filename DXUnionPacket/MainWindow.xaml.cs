@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace DXUnionPacket
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		 const String DOCK_SETTINGS = "dock_config.xml";
 		public MainWindow()
 		{
 			
@@ -43,6 +45,43 @@ namespace DXUnionPacket
 		void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			e.Source.ToString();
+		}
+		
+		void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				string tempPath = System.IO.Path.GetTempPath();
+				tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
+				if (System.IO.File.Exists(tempPath))
+				{
+					DockMan.DeserializationCallback += (s, ee) =>
+					{
+						string item = ee.Name;
+//						DockableContent dc = getDockableContent(item);
+//						ee.Content = dc;
+					};
+					DockMan.RestoreLayout(tempPath);
+				}
+			}
+			catch (Exception ex)
+			{
+				
+			}
+		}
+		
+		void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			try
+			{
+				string tempPath = System.IO.Path.GetTempPath();
+				tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
+				DockMan.SaveLayout(tempPath);
+			}
+			catch (Exception ex)
+			{
+				
+			}
 		}
 	}
 }

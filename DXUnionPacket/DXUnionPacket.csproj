@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
-    <UICulture>en-US</UICulture>
     <ProjectGuid>{CFF05790-E8E2-48EB-942E-DF53228084FD}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -118,7 +117,6 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Linq" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -187,8 +185,8 @@
     <None Include="db\samples2.dat">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="Template\Install.bas" />
-    <None Include="Template\Remove.bas" />
+    <Resource Include="Template\Install.bas" />
+    <Resource Include="Template\Remove.bas" />
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Cut.png" />
     <Resource Include="Images\Delete.png" />

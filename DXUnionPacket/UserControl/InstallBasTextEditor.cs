@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Resources;
 using AvalonEdit.Sample;
 using DXUnionPacket.ViewModel;
 using GongSolutions.Wpf.DragDrop;
@@ -170,11 +172,14 @@ namespace DXUnionPacket.UserControl
 		}
 		void installBas(object sender, EventArgs e)
 		{
+			String res = "Template/Install.bas";
+			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
 			
 		}
 		void removeBas(object sender, EventArgs e)
 		{
-			
+			String res = "Template/Remove.bas";
+			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
 		}
 		void IDropTarget.Drop(DropInfo dropInfo)
 		{
@@ -227,6 +232,17 @@ namespace DXUnionPacket.UserControl
 	}
 	public static class TextEditorExtensions
 	{
+		public static  String GetStringFromResource(this  Assembly ass, string psResourceName)
+		{
+			String r = "";
+			Uri uri = new Uri("pack://application:,,,/" +ass.FullName +";component/" +psResourceName, UriKind.RelativeOrAbsolute);
+			StreamResourceInfo sri = Application.GetResourceStream(uri);
+			using(StreamReader sr = new StreamReader(sri.Stream))
+			{
+				r =sr.ReadToEnd();
+			}
+			return r;
+		}
 		public static string GetWordUnderMouse(this TextDocument document, TextViewPosition position)
 		{
 			string wordHovered = string.Empty;

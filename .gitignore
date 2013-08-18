@@ -99,3 +99,5 @@ Backup*/
 UpgradeLog*.XML
 
 *.chw
+
+/DXUnionPacket/DXUnionPacket.sln
