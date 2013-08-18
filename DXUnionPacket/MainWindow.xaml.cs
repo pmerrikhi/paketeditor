@@ -27,6 +27,7 @@ namespace DXUnionPacket
 	{
 		public MainWindow()
 		{
+			
 			try{
 				InitializeComponent();
 				
@@ -37,6 +38,11 @@ namespace DXUnionPacket
 			{
 				ex.StackTrace.ToLower();
 			}
+		}
+		
+		void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			e.Source.ToString();
 		}
 	}
 }

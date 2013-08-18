@@ -1,108 +1,107 @@
-﻿<ad:DockableContent x:Class="DXUnionPacket.UserControl.SampleTextEditor"
+﻿<UserControl x:Class="DXUnionPacket.UserControl.SampleTextEditor"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 	Selector.IsSelected="True"
-	Name="samplesTextEditorDockableContent"
-	FloatingWindowSizeToContent="WidthAndHeight">
+	Name="samplesTextEditorDockableContent">
 	
 	<!--	IsBusy="{Binding ElementName=ucekbX, Path=VM.IsBusy}"
 								BusyContent="{Binding ElementName=ucekbX, Path=VM.BusyMessage}">-->
 	<DockPanel>
 		<ToolBar
-			DockPanel.Dock="Top">
+		 DockPanel.Dock="Top">
 			<ToolBar.Resources>
 				<Style
-					TargetType="{x:Type Image}">
+				 TargetType="{x:Type Image}">
 					<Style.Triggers>
 						<DataTrigger
-							Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}"
+						 Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}"
 							Value="False">
 							<Setter
-								Property="Opacity"
+							 Property="Opacity"
 								Value="0.30" />
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
 			</ToolBar.Resources>
 			<Button
-				Click="openFileClick">
+			 Click="openFileClick">
 				<Image
-					Source="../Images/Open.png"
+				 Source="../Images/Open.png"
 					Height="16" />
 			</Button>
 			<Button
-				Click="saveFileClick">
+			 Click="saveFileClick">
 				<Image
-					Source="../Images/Save.png"
-					Height="16" />
-			</Button>
-			<Separator />
-			<Button
-				Command="Cut">
-				<Image
-					Source="../Images/Cut.png"
-					Height="16" />
-			</Button>
-			<Button
-				Command="Copy">
-				<Image
-					Source="../Images/Copy.png"
-					Height="16" />
-			</Button>
-			<Button
-				Command="Paste">
-				<Image
-					Source="../Images/Paste.png"
-					Height="16" />
-			</Button>
-			<Button
-				Command="Delete">
-				<Image
-					Source="../Images/Delete.png"
+				 Source="../Images/Save.png"
 					Height="16" />
 			</Button>
 			<Separator />
 			<Button
-				Command="Undo">
+			 Command="Cut">
 				<Image
-					Source="../Images/Undo.png"
+				 Source="../Images/Cut.png"
 					Height="16" />
 			</Button>
 			<Button
-				Command="Redo">
+			 Command="Copy">
 				<Image
-					Source="../Images/Redo.png"
+				 Source="../Images/Copy.png"
+					Height="16" />
+			</Button>
+			<Button
+			 Command="Paste">
+				<Image
+				 Source="../Images/Paste.png"
+					Height="16" />
+			</Button>
+			<Button
+			 Command="Delete">
+				<Image
+				 Source="../Images/Delete.png"
+					Height="16" />
+			</Button>
+			<Separator />
+			<Button
+			 Command="Undo">
+				<Image
+				 Source="../Images/Undo.png"
+					Height="16" />
+			</Button>
+			<Button
+			 Command="Redo">
+				<Image
+				 Source="../Images/Redo.png"
 					Height="16" />
 			</Button>
 			<Separator />
 			<CheckBox
-				IsChecked="{Binding ElementName=textEditor,Path=WordWrap}">
+			 IsChecked="{Binding ElementName=textEditor,Path=WordWrap}">
 				<Image
-					Source="../Images/WordWrap.png"
+				 Source="../Images/WordWrap.png"
 					Height="16" />
 			</CheckBox>
 			<CheckBox
-				IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}">
+			 IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}">
 				<TextBlock
-					Width="16"
+				 Width="16"
 					TextAlignment="Center">#</TextBlock>
 			</CheckBox>
 			<CheckBox
-				IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
+			 IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
 				<TextBlock
-					Width="16"
+				 Width="16"
 					TextAlignment="Center">¶</TextBlock>
 			</CheckBox>
 			<ComboBox
-				Name="highlightingComboBox"
+			 Name="highlightingComboBox"
 				SelectedItem="{Binding SyntaxHighlighting, ElementName=textEditor}"
 				ItemsSource="{Binding Source={x:Static avedit:HighlightingManager.Instance}, Path=HighlightingDefinitions}"
 				SelectionChanged="HighlightingComboBox_SelectionChanged" />
 		</ToolBar>
 		<avedit:TextEditor
-			Name="textEditor"
+		 Name="textEditor"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			SyntaxHighlighting="VBNET"
@@ -113,4 +112,4 @@
 			KeyDown="TextEditor_KeyDown"
 		></avedit:TextEditor>
 	</DockPanel>
-</ad:DockableContent >
+</UserControl >

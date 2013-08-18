@@ -19,7 +19,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using AvalonDock;
+
 using AvalonEdit.Sample;
 using DXUnionPacket.ViewModel;
 using ICSharpCode.AvalonEdit.Folding;
@@ -32,7 +32,7 @@ namespace DXUnionPacket.UserControl
 	/// <summary>
 	/// Interaction logic for SampleTextEditor.xaml
 	/// </summary>
-	public partial class SampleTextEditor : DockableContent
+	public partial class SampleTextEditor : System.Windows.Controls.UserControl
 	{
 		
 		public Samples VM

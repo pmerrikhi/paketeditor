@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Window
 	x:Class="DXUnionPacket.MainWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,35 +7,78 @@
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
 	Title="DXUnionPacket">
-	<ad:DockingManager
-		UseLayoutRounding="True">
-		<ad:ResizingPanel
-			Name="RPMain"
-			Orientation="Horizontal">
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<!--<ResourceDictionary x:Name="b"
+					Source="pack://application:,,,/EKRPE.Author.UserControl;component/InputBindings.xaml" />-->
+				<ResourceDictionary x:Name="a"
+					Source="pack://application:,,,/DXUnionPacket;component/usercontrol/sharedresources.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem DataContext="{uc:UICultureResource menu_file}" Header="{Binding Path=Current}" >
 			
-			<ad:DockablePane
-				Name="DPTree"
-				ShowHeader="True">
-				<uc:SamplesTree />
-			</ad:DockablePane>
-			
-			<ad:ResizingPanel
-				Name="RPSide"
-				Orientation="Vertical">
-				<ad:DockablePane
-					Name="DP1"
-					ShowHeader="True">
-					<ad:DockableContent>
-						<uc:SampleDescriptionControl/>
-					</ad:DockableContent>
-				</ad:DockablePane>
-				<ad:DockablePane
-					Name="DP2"
-					ShowHeader="True">
-					<uc:SampleTextEditor />
+			</MenuItem>
+			<MenuItem DataContext="{uc:UICultureResource menu_settings}" Header="{Binding Path=Current}">
+				<MenuItem DataContext="{uc:UICultureResource menu_settings_lang}" Header="{Binding Path=Current}">
+					
+					<ComboBox
+						DataContext="{uc:UICultureResource menu_settings_lang}"
+						ItemsSource="{Binding }"
+						DisplayMemberPath="UICulture"
+						SelectedItem="{Binding Path=Current}"
+					/>
 				
+				</MenuItem>
+			</MenuItem>
+		</Menu>
+		<ad:DockingManager
+			UseLayoutRounding="True">
+			<ad:ResizingPanel
+				Name="RPMain"
+				Orientation="Horizontal">
+				
+				<ad:DockablePane
+					Name="DPTree"
+					ShowHeader="True">
+					<uc:SamplesTree />
 				</ad:DockablePane>
+				
+				<ad:ResizingPanel
+					Name="RPSide"
+					Orientation="Vertical">
+					<ad:DockablePane
+						Name="DP1"
+						ShowHeader="True">
+						<ad:DockableContent DataContext="{uc:UICultureResource panel_description}" Title="{Binding Path=Current}"
+						>
+							<uc:SampleDescriptionControl/>
+						</ad:DockableContent>
+					</ad:DockablePane>
+					<ad:DockablePane
+						Name="DP2"
+						ShowHeader="True">
+						<ad:DockableContent
+							DataContext="{uc:UICultureResource panel_sample}" Title="{Binding Path=Current}"
+						>
+							<uc:SampleTextEditor
+								x:Name="Sample"/>
+						</ad:DockableContent>
+						<ad:DockableContent
+								DataContext="{uc:UICultureResource panel_bas}" Title="{Binding Path=Current}"
+						>
+							
+							<uc:InstallBasTextEditor x:Name="BAS"
+							/>
+						</ad:DockableContent>
+					
+					</ad:DockablePane>
+				
+				</ad:ResizingPanel>
 			</ad:ResizingPanel>
-		</ad:ResizingPanel>
-	</ad:DockingManager>
+		</ad:DockingManager>
+	</DockPanel>
 </Window>

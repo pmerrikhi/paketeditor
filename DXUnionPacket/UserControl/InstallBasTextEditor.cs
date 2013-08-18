@@ -19,10 +19,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using AvalonDock;
 using AvalonEdit.Sample;
 using DXUnionPacket.ViewModel;
 using GongSolutions.Wpf.DragDrop;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Microsoft.Win32;
@@ -33,7 +34,7 @@ namespace DXUnionPacket.UserControl
 	/// <summary>
 	/// Interaction logic for SampleTextEditor.xaml
 	/// </summary>
-	public partial class InstallBasTextEditor : DockableContent, IDropTarget
+	public partial class InstallBasTextEditor : System.Windows.Controls.UserControl, IDropTarget
 	{
 		
 //		public Samples VM
@@ -75,6 +76,8 @@ namespace DXUnionPacket.UserControl
 		void openFileClick(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+			dlg.FilterIndex = 0;
 			dlg.CheckFileExists = true;
 			if (dlg.ShowDialog() ?? false) {
 				currentFileName = dlg.FileName;
@@ -87,12 +90,25 @@ namespace DXUnionPacket.UserControl
 		{
 			if (currentFileName == null) {
 				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.DefaultExt = ".txt";
+				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+				dlg.FilterIndex = 0;
 				if (dlg.ShowDialog() ?? false) {
 					currentFileName = dlg.FileName;
 				} else {
 					return;
 				}
+			}
+			textEditor.Save(currentFileName);
+		}
+		void saveAsFileClick(object sender, EventArgs e)
+		{
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+			dlg.FilterIndex = 0;
+			if (dlg.ShowDialog() ?? false) {
+				currentFileName = dlg.FileName;
+			} else {
+				return;
 			}
 			textEditor.Save(currentFileName);
 		}
@@ -168,7 +184,8 @@ namespace DXUnionPacket.UserControl
 					try
 					{
 						Sample sample = dropInfo.Data as Sample;
-						textEditor.Text += sample.Text;
+						TextLocation loc = textEditor.TextArea.Caret.Location;
+						textEditor.Text = textEditor.Text.Insert(textEditor.TextArea.Caret.Offset,sample.Text);
 					}
 					catch(Exception ex)
 					{
@@ -186,6 +203,78 @@ namespace DXUnionPacket.UserControl
 					dropInfo.Effects = DragDropEffects.Copy;
 				}
 			}
+			
+		}
+		
+		void TextEditor_DragOver(object sender, DragEventArgs e)
+		{
+		}
+		
+		void TextEditor_MouseHover(object sender, MouseEventArgs e)
+		{
+			if(e.LeftButton == MouseButtonState.Pressed)
+			{
+				var pos = textEditor.GetPositionFromPoint(e.GetPosition(textEditor));
+				
+				var line = pos.Value.Line;
+				var column = pos.Value.Column;
+
+				var offset = textEditor.Document.GetOffset(line, column);
+				textEditor.TextArea.Caret.Offset = offset;
+			}
+		}
+		
+	}
+	public static class TextEditorExtensions
+	{
+		public static string GetWordUnderMouse(this TextDocument document, TextViewPosition position)
+		{
+			string wordHovered = string.Empty;
+
+			var line = position.Line;
+			var column = position.Column;
+
+			var offset = document.GetOffset(line, column);
+			if (offset >= document.TextLength)
+				offset--;
+
+			var textAtOffset = document.GetText(offset, 1);
+
+			// Get text backward of the mouse position, until the first space
+			while (!string.IsNullOrWhiteSpace(textAtOffset))
+			{
+				wordHovered = textAtOffset + wordHovered;
+
+				offset--;
+
+				if (offset < 0)
+					break;
+
+				textAtOffset = document.GetText(offset, 1);
+			}
+
+			// Get text forward the mouse position, until the first space
+			offset = document.GetOffset(line, column);
+			if (offset < document.TextLength - 1)
+			{
+				offset++;
+
+				textAtOffset = document.GetText(offset, 1);
+
+				while (!string.IsNullOrWhiteSpace(textAtOffset))
+				{
+					wordHovered = wordHovered + textAtOffset;
+
+					offset++;
+
+					if (offset >= document.TextLength)
+						break;
+
+					textAtOffset = document.GetText(offset, 1);
+				}
+			}
+
+			return wordHovered;
 		}
 	}
 }
