@@ -152,6 +152,10 @@
     <Compile Include="UserControl\InstallBasTextEditor.cs">
       <DependentUpon>InstallBasTextEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\InstallerTree.xaml.cs">
+      <DependentUpon>InstallerTree.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UserControl\SampleDescriptionControl.xaml.cs">
       <DependentUpon>SampleDescriptionControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -166,12 +170,14 @@
     </Compile>
     <Compile Include="UserControl\UICultureResourceExtension.cs" />
     <Compile Include="UserControl\UICultureString.cs" />
+    <Compile Include="ViewModel\InstallersDirectory.cs" />
     <Compile Include="ViewModel\Sample.cs" />
     <Compile Include="ViewModel\Samples.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
     <Page Include="UserControl\InstallBasTextEditor.xaml" />
+    <Page Include="UserControl\InstallerTree.xaml" />
     <Page Include="UserControl\SampleDescriptionControl.xaml" />
     <Page Include="UserControl\SamplesTree.xaml" />
     <Page Include="UserControl\SampleTextEditor.xaml" />
@@ -223,6 +229,12 @@
     <Folder Include="Template" />
     <Folder Include="UserControl" />
     <Folder Include="ViewModel" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DXInstaller\DXInstaller.csproj">
+      <Project>{4192BF11-5C93-48B5-BF04-47F4A56E0E0F}</Project>
+      <Name>DXInstaller</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

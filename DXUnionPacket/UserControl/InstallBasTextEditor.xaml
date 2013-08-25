@@ -22,13 +22,14 @@
 						Height="20" Width="20" />
 				</Button>
 				<Button
-					DataContext="{uc:UICultureResource button_bas_remove}" 
-					ToolTip="{Binding Path=Current}"					
+					DataContext="{uc:UICultureResource button_bas_remove}"
+					ToolTip="{Binding Path=Current}"
 					Click="removeBas">
 					<Image
 						Source="../Images/Remove.png"
 						Height="20" Width="20" />
 				</Button>
+				
 			</ToolBar>
 			<ToolBar>
 				<Button
@@ -38,7 +39,7 @@
 						Height="16" />
 				</Button>
 				<Button
-					DataContext="{uc:UICultureResource button_save}" 
+					DataContext="{uc:UICultureResource button_save}"
 					ToolTip="{Binding Path=Current}"
 					Click="saveFileClick">
 					<Image
@@ -46,7 +47,7 @@
 						Height="16" />
 				</Button>
 				<Button
-					DataContext="{uc:UICultureResource button_save_as}" 
+					DataContext="{uc:UICultureResource button_save_as}"
 					ToolTip="{Binding Path=Current}"
 					Click="saveAsFileClick">
 					<Image

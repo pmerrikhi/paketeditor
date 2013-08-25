@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="DXUnionPacket.UserControl.InstallerTree"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:system="clr-namespace:System;assembly=PresentationCore"
+             xmlns:inst="clr-namespace:DXInstaller;assembly=DXInstaller"
+             xmlns:dx="clr-namespace:DXUnionPacket.ViewModel"
+             xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop">
+	<UserControl.Resources>
+		<HierarchicalDataTemplate DataType="{x:Type inst:MSIInstaller}" ItemsSource="{Binding }">
+			<Expander Header="{Binding Subject}" Background="Transparent">
+				<StackPanel Margin="10 0 0 0" >
+					<TextBlock Text="{Binding Company}" />
+					<TextBlock Text="{Binding Version}" />
+					<TextBlock Text="{Binding Guid}" />
+					<TextBlock Text="{Binding Created}" />
+					<TextBlock Text="{Binding File.FullName}" />
+				</StackPanel>
+			</Expander>
+		</HierarchicalDataTemplate>
+	</UserControl.Resources>
+	<DockPanel>
+		<TreeView Name="installersTreeView"
+		          ItemsSource="{Binding Installers}"
+		          
+		          dd:DragDrop.DragHandler="{Binding }"
+		          dd:DragDrop.DropHandler="{Binding }"
+		          dd:DragDrop.IsDragSource="True"
+		          dd:DragDrop.IsDropTarget="True"
+		>
+		
+		</TreeView>
+	</DockPanel>
+</UserControl>

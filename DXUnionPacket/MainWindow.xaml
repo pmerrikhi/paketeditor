@@ -6,7 +6,6 @@
 	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
-	Loaded="Window_Loaded"
 	Closing="Window_Closing"
 	Title="DXUnionPacket">
 	<Window.Resources>
@@ -39,6 +38,7 @@
 		</Menu>
 		<ad:DockingManager
 			Name="DockMan"
+			Loaded="DockMan_Loaded"
 			UseLayoutRounding="True">
 			<ad:ResizingPanel
 				Name="RPMain"
@@ -47,9 +47,16 @@
 				<ad:DockablePane
 					Name="DPTree"
 					ShowHeader="True">
-					<uc:SamplesTree />
+					
+					<ad:DockableContent DataContext="{uc:UICultureResource panel_samples}" Title="{Binding Path=Current}"
+					>
+						<uc:SamplesTree />
+					</ad:DockableContent>
+					<ad:DockableContent DataContext="{uc:UICultureResource panel_installers}" Title="{Binding Path=Current}"
+					>
+						<uc:InstallerTree/>
+					</ad:DockableContent>
 				</ad:DockablePane>
-				
 				<ad:ResizingPanel
 					Name="RPSide"
 					Orientation="Vertical">
@@ -71,7 +78,7 @@
 								x:Name="Sample"/>
 						</ad:DockableContent>
 						<ad:DockableContent
-								DataContext="{uc:UICultureResource panel_bas}" Title="{Binding Path=Current}"
+							DataContext="{uc:UICultureResource panel_bas}" Title="{Binding Path=Current}"
 						>
 							
 							<uc:InstallBasTextEditor x:Name="BAS"

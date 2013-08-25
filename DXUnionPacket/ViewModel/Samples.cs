@@ -123,8 +123,6 @@ namespace DXUnionPacket.ViewModel
 		
 		void IDragSource.StartDrag(DragInfo dragInfo)
 		{
-			dragInfo.ToString();
-			
 			dragInfo.Effects = DragDropEffects.Copy | DragDropEffects.Move;
 			
 			dragInfo.Data = dragInfo.SourceItem;

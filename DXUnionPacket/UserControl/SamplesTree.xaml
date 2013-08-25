@@ -1,17 +1,16 @@
-﻿<ad:DockableContent x:Class="DXUnionPacket.UserControl.SamplesTree"
+﻿<UserControl x:Class="DXUnionPacket.UserControl.SamplesTree"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:dx="clr-namespace:DXUnionPacket.ViewModel"
 	xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
 	xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-	Name="samplesTreeViewDockableContent"
-	FloatingWindowSizeToContent="WidthAndHeight">
-	<ad:DockableContent.Resources>
+	Name="samplesTreeViewUserControl">
+	<UserControl.Resources>
 		<HierarchicalDataTemplate DataType="{x:Type dx:Sample}" ItemsSource="{Binding Children}">
 			<TextBlock Text="{Binding Name}" />
 		</HierarchicalDataTemplate>
-	</ad:DockableContent.Resources>
+	</UserControl.Resources>
 	<DockPanel>
 		<TreeView Name="samplesTreeView"
 		          
@@ -25,4 +24,4 @@
 		
 		</TreeView>
 	</DockPanel>
-</ad:DockableContent>
+</UserControl>

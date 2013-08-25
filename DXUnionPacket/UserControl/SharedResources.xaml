@@ -10,7 +10,7 @@
 	<uc:UIString  x:Key="menu_file">
 		<uc:UICultureString UICulture="en-US" Value="File" />
 		<uc:UICultureString UICulture="de-DE" Value="File"/>
-	</uc:UIString>	
+	</uc:UIString>
 	<uc:UIString  x:Key="menu_settings">
 		<uc:UICultureString UICulture="en-US" Value="Settings" />
 		<uc:UICultureString UICulture="de-DE" Value="Einstellungen"/>
@@ -20,15 +20,22 @@
 		<uc:UICultureString UICulture="de-DE" Value="Sprache"/>
 	</uc:UIString>
 	
-	
+	<uc:UIString  x:Key="panel_samples">
+		<uc:UICultureString UICulture="en-US" Value="Samples" />
+		<uc:UICultureString UICulture="de-DE" Value="Muster"/>
+	</uc:UIString>
+	<uc:UIString  x:Key="panel_installers">
+		<uc:UICultureString UICulture="en-US" Value="Installers" />
+		<uc:UICultureString UICulture="de-DE" Value="Pakete"/>
+	</uc:UIString>
 	<uc:UIString  x:Key="panel_description">
 		<uc:UICultureString UICulture="en-US" Value="Description" />
 		<uc:UICultureString UICulture="de-DE" Value="Beschreibung"/>
-	</uc:UIString>	
+	</uc:UIString>
 	<uc:UIString  x:Key="panel_sample">
 		<uc:UICultureString UICulture="en-US" Value="Sample" />
 		<uc:UICultureString UICulture="de-DE" Value="Muster"/>
-	</uc:UIString>	
+	</uc:UIString>
 	<uc:UIString  x:Key="panel_bas">
 		<uc:UICultureString UICulture="en-US" Value="BAS" />
 		<uc:UICultureString UICulture="de-DE" Value="BAS"/>
@@ -51,7 +58,12 @@
 		<uc:UICultureString UICulture="de-DE" Value="Deinstallierungsbas"/>
 	</uc:UIString>
 	
-	
+	<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}">
+	Transparent
+	</SolidColorBrush>
+	<SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}">
+	Black
+	</SolidColorBrush>
 	<Style
 		TargetType="{x:Type Image}">
 		<Style.Triggers>

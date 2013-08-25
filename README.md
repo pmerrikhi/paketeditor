@@ -13,17 +13,20 @@ UI
 		+ Later:
 			- NSIS
 			- InstallShield
+- [X] Panel InstallerTree: a TreeView of available IInstallers (for now only MSI) starting from a specified Directory
+
+
 			
 
 Backend
 -------
-- [ ] IInstaller interface to be implemented for each type of installer, with the following info's
+- [X] IInstaller interface to be implemented for each type of installer, with the following info's
 		+ Name
 		+ Version
 		+ Date Created
 		+ Creator
 		+ Company
 
-- [ ] MSIInstaller class using:
+- [X] MSIInstaller class using:
 		+ System.Configuration.Install.dll
 		+ msi.dll

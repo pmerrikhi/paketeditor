@@ -23,7 +23,7 @@ namespace DXUnionPacket.UserControl
 	/// <summary>
 	/// Interaction logic for SamplesTree.xaml
 	/// </summary>
-	public partial class SamplesTree : DockableContent
+	public partial class SamplesTree : System.Windows.Controls.UserControl
 	{
 		public ViewModel.Samples VM
 		{
