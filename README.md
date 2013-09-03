@@ -16,7 +16,14 @@ UI
 - [X] Panel InstallerTree: a TreeView of available IInstallers (for now only MSI) starting from a specified Directory
 
 
-			
+Bugs
+----
+
+- [] 
+
+- [] 
+
+- [] 
 
 Backend
 -------
