@@ -16,7 +16,14 @@ UI
 - [X] Panel InstallerTree: a TreeView of available IInstallers (for now only MSI) starting from a specified Directory
 
 
-			
+Bugs
+----
+
+- [] Everytime I drag and drop an item from the Treeview into the Edit window it automatically drop to the top of the window/.bas file  
+
+- [] the green plus symbol and the red X symbol flip through to inst.bas and deinst.bas. The panes and the bottom named sample and Bas are suppose to do that 
+
+- [] What is the purpose of installers pane at the buttom of the treeview pane.
 
 Backend
 -------
