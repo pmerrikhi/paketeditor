@@ -18,13 +18,14 @@ namespace DXUnionPacket
 		{
 			
 			StructureMap.ObjectFactory.Initialize(  x  => {
+			                                      	x.For<DXUnionPacket.DXSettings>().Singleton();
 			                                      	x.For<DXUnionPacket.DataModel.Database>().Singleton();
 			                                      	x.For<DXUnionPacket.ViewModel.Samples>().Singleton();
 			                                      	x.For<DXUnionPacket.ViewModel.InstallersDirectory>().Singleton();
-			                                              });
+			                                      });
 			
 			MainWindow window = new MainWindow();
-			window.Show();
+			window.ShowDialog();
 		}
 	}
 

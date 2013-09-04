@@ -26,16 +26,23 @@ namespace DXUnionPacket.ViewModel
 	/// </summary>
 	public class InstallersDirectory : MVVm.Core.MediatorEnabledViewModel<object>,  IDragSource, IDropTarget
 	{
-		private string _dir;
+		
+		DXUnionPacket.DXSettings  setts
+		{
+			get{
+				return  StructureMap.ObjectFactory.GetInstance<DXUnionPacket.DXSettings>();
+			}
+		}
 		public String Directory
 		{
 			get{
-				return _dir;
+				string t =  setts[DXSettings.SETTING_MSI_ROOT_DIR];
+				return t;
 			}
 			set{
 				if(value != null )
 				{
-					this._dir = value;
+					setts.Settings.Add(DXSettings.SETTING_MSI_ROOT_DIR, value);
 					this.OnPropertyChanged("Directory");
 				}
 			}
@@ -128,6 +135,7 @@ namespace DXUnionPacket.ViewModel
 		}
 		public InstallersDirectory()
 		{
+			ProcessDirectory();
 			this.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
 			{
 				if(e.PropertyName.Equals("Directory"))
@@ -153,16 +161,26 @@ namespace DXUnionPacket.ViewModel
 			DirectoryInfo di = new DirectoryInfo(this.Directory);
 			foreach(FileInfo fi in di.GetFiles())
 			{
-				IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
-				if(inst != null)
+				try{
+					IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
+					if(inst != null)
+					{
+						this.Installers.Add(inst);
+						changed = true;
+					}
+				}catch(Exception)
 				{
-					this.Installers.Add(inst);
-					changed = true;
+					
 				}
 			}
 			foreach(DirectoryInfo di_next in di.GetDirectories())
 			{
-				changed = ProcessDirectory(di_next, changed);
+				try{
+					changed = ProcessDirectory(di_next, changed);
+				}catch(Exception)
+				{
+					
+				}
 			}
 			if(changed)
 			{
@@ -173,16 +191,26 @@ namespace DXUnionPacket.ViewModel
 		{
 			foreach(FileInfo fi in di.GetFiles())
 			{
-				IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
-				if(inst != null)
+				try{
+					IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
+					if(inst != null)
+					{
+						this.Installers.Add(inst);
+						changed = true;
+					}
+				}catch(Exception)
 				{
-					this.Installers.Add(inst);
-					changed = true;
+					
 				}
 			}
 			foreach(DirectoryInfo di_next in di.GetDirectories())
 			{
-				changed = ProcessDirectory(di_next, changed);
+				try{
+					changed = ProcessDirectory(di_next, changed);
+				}catch(Exception)
+				{
+					
+				}
 			}
 			return changed;
 		}

@@ -11,9 +11,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.IO;
-using Microsoft.Deployment.WindowsInstaller;
-using Microsoft.Deployment.WindowsInstaller.Linq;
-using Microsoft.Deployment.WindowsInstaller.Linq.Entities;
 
 namespace DXInstaller
 {

@@ -34,7 +34,6 @@ namespace DXUnionPacket.UserControl
 		{
 			try{
 				InitializeComponent();
-				this.VM.Directory = "C:\\Matt\\Projects";
 				this.DataContext = VM;
 			}catch(Exception ex)
 			{

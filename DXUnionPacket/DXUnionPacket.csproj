@@ -85,6 +85,9 @@
     <Reference Include="AvalonDock.Themes">
       <HintPath>lib\AvalonDock.Themes.dll</HintPath>
     </Reference>
+    <Reference Include="CmdLine">
+      <HintPath>lib\CmdLine.dll</HintPath>
+    </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop">
       <HintPath>lib\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
@@ -105,6 +108,9 @@
     </Reference>
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Simple.Settings">
+      <HintPath>lib\Simple.Settings.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>lib\StructureMap.dll</HintPath>
@@ -147,6 +153,7 @@
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DXSettings.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="UserControl\InstallBasTextEditor.cs">
@@ -206,12 +213,19 @@
     <Resource Include="Images\Remove.png" />
     <None Include="lib\AvalonDock.dll" />
     <None Include="lib\AvalonDock.Themes.dll" />
+    <None Include="lib\CmdLine.dll" />
     <None Include="lib\GongSolutions.Wpf.DragDrop.dll" />
     <None Include="lib\ICSharpCode.AvalonEdit.dll" />
     <None Include="lib\ICSharpCode.SharpZipLib.dll" />
+    <None Include="lib\Microsoft.Deployment.WindowsInstaller.dll" />
+    <None Include="lib\Microsoft.Deployment.WindowsInstaller.Linq.xml" />
+    <None Include="lib\Microsoft.Deployment.WindowsInstaller.Package.dll" />
+    <None Include="lib\Microsoft.Deployment.WindowsInstaller.Package.xml" />
+    <None Include="lib\Microsoft.Deployment.WindowsInstaller.xml" />
     <None Include="lib\MVVm.dll" />
     <None Include="lib\MVVm.View.dll" />
     <None Include="lib\nunit.framework.dll" />
+    <None Include="lib\Simple.Settings.dll" />
     <None Include="lib\StructureMap.dll" />
     <None Include="lib\WPFToolkit.Extended.dll" />
     <None Include="sqlite3.def">
