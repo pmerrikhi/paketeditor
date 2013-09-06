@@ -23,6 +23,14 @@
 			<MenuItem DataContext="{uc:UICultureResource menu_file}" Header="{Binding Path=Current}" >
 			
 			</MenuItem>
+			<MenuItem DataContext="{uc:UICultureResource menu_view}" Header="{Binding Path=Current}">
+			<!--	<MenuItem Name="menu_view_description" DataContext="{uc:UICultureResource menu_view_description}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
+				<MenuItem Name="menu_view_installers" DataContext="{uc:UICultureResource menu_view_installers}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
+				<MenuItem Name="menu_view_code" DataContext="{uc:UICultureResource menu_view_code}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
+				<MenuItem Name="menu_view_tree" DataContext="{uc:UICultureResource menu_view_tree}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>-->
+				<MenuItem Name="menu_view_reset" IsCheckable="True" DataContext="{uc:UICultureResource menu_view_reset}" Header="{Binding Path=Current}" Click="MenuItem_Click">
+				</MenuItem>
+			</MenuItem>
 			<MenuItem DataContext="{uc:UICultureResource menu_settings}" Header="{Binding Path=Current}">
 				<MenuItem DataContext="{uc:UICultureResource menu_settings_lang}" Header="{Binding Path=Current}">
 					
@@ -39,6 +47,7 @@
 		<ad:DockingManager
 			Name="DockMan"
 			Loaded="DockMan_Loaded"
+			
 			UseLayoutRounding="True">
 			<ad:ResizingPanel
 				Name="RPMain"
@@ -48,11 +57,14 @@
 					Name="DPTree"
 					ShowHeader="True">
 					
-					<ad:DockableContent DataContext="{uc:UICultureResource panel_samples}" Title="{Binding Path=Current}"
+					<ad:DockableContent
+						Name="a"
+						DataContext="{uc:UICultureResource panel_samples}" Title="{Binding Path=Current}"
 					>
 						<uc:SamplesTree />
 					</ad:DockableContent>
-					<ad:DockableContent DataContext="{uc:UICultureResource panel_installers}" Title="{Binding Path=Current}"
+					<ad:DockableContent
+						Name="b" DataContext="{uc:UICultureResource panel_installers}" Title="{Binding Path=Current}"
 					>
 						<uc:InstallerTree/>
 					</ad:DockableContent>
@@ -63,7 +75,8 @@
 					<ad:DockablePane
 						Name="DP1"
 						ShowHeader="True">
-						<ad:DockableContent DataContext="{uc:UICultureResource panel_description}" Title="{Binding Path=Current}"
+						<ad:DockableContent
+							Name="c" DataContext="{uc:UICultureResource panel_description}" Title="{Binding Path=Current}"
 						>
 							<uc:SampleDescriptionControl/>
 						</ad:DockableContent>
@@ -72,12 +85,14 @@
 						Name="DP2"
 						ShowHeader="True">
 						<ad:DockableContent
+							Name="d"
 							DataContext="{uc:UICultureResource panel_sample}" Title="{Binding Path=Current}"
 						>
 							<uc:SampleTextEditor
 								x:Name="Sample"/>
 						</ad:DockableContent>
 						<ad:DockableContent
+							Name="e"
 							DataContext="{uc:UICultureResource panel_bas}" Title="{Binding Path=Current}"
 						>
 							

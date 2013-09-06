@@ -14,17 +14,21 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using DXInstaller;
 using GongSolutions.Wpf.DragDrop;
+using Microsoft.Win32;
+using MVVm.Core;
 using StructureMap.Construction;
+using StructureMap.Source;
 
 namespace DXUnionPacket.ViewModel
 {
 	/// <summary>
 	/// Description of InstallersDirectory.
 	/// </summary>
-	public class InstallersDirectory : MVVm.Core.MediatorEnabledViewModel<object>,  IDragSource, IDropTarget
+	public class InstallersDirectory : MVVm.Core.MediatorEnabledViewModel<object>,  GongSolutions.Wpf.DragDrop.IDragSource, GongSolutions.Wpf.DragDrop.IDropTarget
 	{
 		
 		DXUnionPacket.DXSettings  setts
@@ -33,6 +37,7 @@ namespace DXUnionPacket.ViewModel
 				return  StructureMap.ObjectFactory.GetInstance<DXUnionPacket.DXSettings>();
 			}
 		}
+		private DirectoryInfo _dirInfo;
 		public String Directory
 		{
 			get{
@@ -42,8 +47,14 @@ namespace DXUnionPacket.ViewModel
 			set{
 				if(value != null )
 				{
-					setts.Settings.Add(DXSettings.SETTING_MSI_ROOT_DIR, value);
-					this.OnPropertyChanged("Directory");
+					if(!setts.Settings.ContainsKey(DXSettings.SETTING_MSI_ROOT_DIR))
+					{
+						setts.Settings.Add(DXSettings.SETTING_MSI_ROOT_DIR, value);
+						this.OnPropertyChanged("Directory");
+					}else{
+						setts.Settings[DXSettings.SETTING_MSI_ROOT_DIR] = value;
+						this.OnPropertyChanged("Directory");
+					}
 				}
 			}
 		}
@@ -57,6 +68,21 @@ namespace DXUnionPacket.ViewModel
 					_installers = new ObservableCollection<IInstaller>();
 				}
 				return _installers;
+			}
+		}
+		RelayCommand _changeDirectoryCommand;
+		public RelayCommand ChangeDirectoryCommand
+		{
+			get{
+				if(_changeDirectoryCommand == null)
+				{
+					_changeDirectoryCommand = new RelayCommand( (xx) => {
+					                                           	this.Browse();
+					                                           }, (xx) => {
+					                                           	return System.IO.Directory.Exists(this.Directory);
+					                                           });
+				}
+				return _changeDirectoryCommand;
 			}
 		}
 		FileSystemWatcher _fsw;
@@ -140,10 +166,18 @@ namespace DXUnionPacket.ViewModel
 			{
 				if(e.PropertyName.Equals("Directory"))
 				{
-					this.Fsw.EnableRaisingEvents = false;
-					this.Fsw.Path = this.Directory;
-					ProcessDirectory();
-					this.Fsw.EnableRaisingEvents = true;
+					if(System.IO.Directory.Exists(this.Directory))
+					{
+						DirectoryInfo din = new DirectoryInfo(this.Directory);
+						if(this._dirInfo != null &&!din.FullName.TrimEnd("\\".ToCharArray()).Equals(this._dirInfo.FullName.TrimEnd("\\".ToCharArray())))
+						{
+							this.Installers.Clear();
+							this.Fsw.EnableRaisingEvents = false;
+							this.Fsw.Path = this.Directory;
+							ProcessDirectory();
+							this.Fsw.EnableRaisingEvents = true;
+						}
+					}
 				}
 			};
 		}
@@ -155,19 +189,64 @@ namespace DXUnionPacket.ViewModel
 //			ProcessDirectory();
 //
 //		}
+		void AddInstaller(String fileName)
+		{
+			
+			BackgroundWorker bw_add_installer = new BackgroundWorker();
+			bw_add_installer.DoWork += delegate(object sender, DoWorkEventArgs e)
+			{
+				IInstaller inst =null;
+				try{
+					inst = InstallerFactory.GetInstaller(fileName);
+					if(inst != null)
+					{
+						e.Result  = inst;
+					} else{
+						e.Result = null;
+					}
+				}catch(Exception)
+				{
+					e.Result = null;
+				}
+				
+			};
+			bw_add_installer.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
+			{
+				if(!e.Cancelled && e.Result != null  && e.Result is IInstaller)
+				{
+					try{
+						IInstaller inst = (IInstaller)e.Result;
+						if(inst != null)
+						{
+							this.Installers.Add(inst);
+							
+							App.Current.Dispatcher.Invoke((Action) (() => {
+							                                        }));
+						}
+					}catch(Exception)
+					{
+						
+					}
+				}
+			};
+			bw_add_installer.RunWorkerAsync();
+		}
+		
 		public void ProcessDirectory()
 		{
 			bool changed = false;
-			DirectoryInfo di = new DirectoryInfo(this.Directory);
+			this._dirInfo = new DirectoryInfo(this.Directory);
+			DirectoryInfo di = this._dirInfo;
 			foreach(FileInfo fi in di.GetFiles())
 			{
 				try{
-					IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
-					if(inst != null)
-					{
-						this.Installers.Add(inst);
-						changed = true;
-					}
+					this.AddInstaller(fi.FullName);
+//					IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
+//					if(inst != null)
+//					{
+//						this.Installers.Add(inst);
+//						changed = true;
+//					}
 				}catch(Exception)
 				{
 					
@@ -192,12 +271,14 @@ namespace DXUnionPacket.ViewModel
 			foreach(FileInfo fi in di.GetFiles())
 			{
 				try{
-					IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
-					if(inst != null)
-					{
-						this.Installers.Add(inst);
-						changed = true;
-					}
+					
+					this.AddInstaller(fi.FullName);
+//					IInstaller inst = InstallerFactory.GetInstaller(fi.FullName);
+//					if(inst != null)
+//					{
+//						this.Installers.Add(inst);
+//						changed = true;
+//					}
 				}catch(Exception)
 				{
 					
@@ -215,9 +296,22 @@ namespace DXUnionPacket.ViewModel
 			return changed;
 		}
 		
+		private void Browse(){
+			FolderBrowserDialog fbd = new FolderBrowserDialog();
+			fbd.SelectedPath = this.Directory;
+			DialogResult res = fbd.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				this.Installers.Clear();
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Background, (Action)(() =>
+				                                                                            {
+				                                                                            	this.Directory = fbd.SelectedPath;
+				                                                                            }));
+			}
+		}
 		public void StartDrag(DragInfo dragInfo)
 		{
-			dragInfo.Effects = DragDropEffects.Copy | DragDropEffects.Move;
+			dragInfo.Effects = System.Windows.DragDropEffects.Copy |  System.Windows.DragDropEffects.Move;
 			
 			dragInfo.Data = dragInfo.SourceItem;
 		}
@@ -228,7 +322,7 @@ namespace DXUnionPacket.ViewModel
 			{
 				if(dropInfo.Data is IInstaller && dropInfo.TargetItem != dropInfo.Data){
 					dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
-					dropInfo.Effects = DragDropEffects.Copy;
+					dropInfo.Effects =  System.Windows.DragDropEffects.Copy;
 				}else if(dropInfo.Data != null){
 					dropInfo.Data.ToString();
 				}

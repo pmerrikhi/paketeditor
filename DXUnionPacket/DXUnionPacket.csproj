@@ -20,6 +20,7 @@
     <DelaySign>False</DelaySign>
     <RunCodeAnalysis>False</RunCodeAnalysis>
     <SourceAnalysisOverrideSettingsFile>C:\Users\ekr\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <ApplicationIcon>Images\package-manager-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>True</DebugSymbols>
@@ -123,6 +124,7 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -211,6 +213,7 @@
     <Resource Include="Images\WordWrap.png" />
     <Resource Include="Images\Add.png" />
     <Resource Include="Images\Remove.png" />
+    <None Include="Images\package-manager-icon.png" />
     <None Include="lib\AvalonDock.dll" />
     <None Include="lib\AvalonDock.Themes.dll" />
     <None Include="lib\CmdLine.dll" />

@@ -11,6 +11,15 @@
 		<uc:UICultureString UICulture="en-US" Value="File" />
 		<uc:UICultureString UICulture="de-DE" Value="File"/>
 	</uc:UIString>
+	<uc:UIString  x:Key="menu_view">
+		<uc:UICultureString UICulture="en-US" Value="View" />
+		<uc:UICultureString UICulture="de-DE" Value="Ansicht"/>
+	</uc:UIString>
+	<uc:UIString  x:Key="menu_view_reset">
+		<uc:UICultureString UICulture="en-US" Value="Reset" />
+		<uc:UICultureString UICulture="de-DE" Value="Reset"/>
+	</uc:UIString>
+	
 	<uc:UIString  x:Key="menu_settings">
 		<uc:UICultureString UICulture="en-US" Value="Settings" />
 		<uc:UICultureString UICulture="de-DE" Value="Einstellungen"/>
@@ -41,6 +50,10 @@
 		<uc:UICultureString UICulture="de-DE" Value="BAS"/>
 	</uc:UIString>
 	
+	<uc:UIString  x:Key="button_browse">
+		<uc:UICultureString UICulture="en-US" Value="Browse" />
+		<uc:UICultureString UICulture="de-DE" Value="Durchsuchen"/>
+	</uc:UIString>
 	<uc:UIString  x:Key="button_save">
 		<uc:UICultureString UICulture="en-US" Value="Save" />
 		<uc:UICultureString UICulture="de-DE" Value="Speichern"/>

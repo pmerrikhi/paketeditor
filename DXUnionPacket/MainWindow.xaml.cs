@@ -26,7 +26,9 @@ namespace DXUnionPacket
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		 const String DOCK_SETTINGS = "dock_config.xml";
+		const String DOCK_SETTINGS = "dock_config.xml";
+		bool _reset_views = false;
+		
 		public MainWindow()
 		{
 			
@@ -49,39 +51,57 @@ namespace DXUnionPacket
 		
 		void DockMan_Loaded(object sender, RoutedEventArgs e)
 		{
-//			try
-//			{
-//				string tempPath = System.IO.Path.GetTempPath();
-//				tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
-//				if (System.IO.File.Exists(tempPath))
-//				{
-//					DockMan.DeserializationCallback += (s, ee) =>
-//					{
-//						string item = ee.Name;
-////						DockableContent dc = getDockableContent(item);
-////						ee.Content = dc;
-//					};
-//					DockMan.RestoreLayout(tempPath);
-//				}
-//			}
-//			catch (Exception ex)
-//			{
-//				
-//			}
+			try
+			{
+				string tempPath = System.IO.Path.GetTempPath();
+				tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
+				if (System.IO.File.Exists(tempPath))
+				{
+					DockMan.DeserializationCallback += (s, ee) =>
+					{
+						string item = ee.Name;
+//						DockableContent dc = getDockableContent(item);
+//						ee.Content = dc;
+					};
+					DockMan.RestoreLayout(tempPath);
+				}
+			}
+			catch (Exception ex)
+			{
+				ex.Message.ToString();
+			}
 		}
 		
 		void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-//			try
-//			{
-//				string tempPath = System.IO.Path.GetTempPath();
-//				tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
-//				DockMan.SaveLayout(tempPath);
-//			}
-//			catch (Exception ex)
-//			{
-//				
-//			}
+			try
+			{
+				if(_reset_views)
+				{
+					string tempPath = System.IO.Path.GetTempPath();
+					tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
+					if (System.IO.File.Exists(tempPath))
+					{
+						System.IO.File.Delete(tempPath);
+					}
+				}else{
+					string tempPath = System.IO.Path.GetTempPath();
+					tempPath = Path.Combine(tempPath, DOCK_SETTINGS);
+					DockMan.SaveLayout(tempPath);
+				}
+			}
+			catch (Exception ex)
+			{
+				
+			}
+		}
+		
+		void MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+			_reset_views = !_reset_views;
+			MenuItem m = (MenuItem) sender;
+			m.IsChecked = _reset_views;
+			
 		}
 		
 	}

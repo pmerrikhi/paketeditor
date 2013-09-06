@@ -20,6 +20,19 @@
 		</HierarchicalDataTemplate>
 	</UserControl.Resources>
 	<DockPanel>
+		<Grid DockPanel.Dock="Top">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="3*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+			<TextBox Grid.Row="0" Grid.Column="0"	Text="{Binding Directory, UpdateSourceTrigger=PropertyChanged}" />
+			<Button Grid.Row="0" Grid.Column="1"	Command="{Binding ChangeDirectoryCommand}">
+				<TextBlock DataContext="{uc:UICultureResource button_browse}" Text="{Binding Path=Current}"/>
+			</Button>
+		</Grid>
 		<TreeView Name="installersTreeView"
 		          ItemsSource="{Binding Installers}"
 		          
