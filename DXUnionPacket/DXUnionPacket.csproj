@@ -195,7 +195,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="db\samples.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="db\samples2.dat">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
