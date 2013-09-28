@@ -3,13 +3,14 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
 	xmlns:avedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+         xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
 	Selector.IsSelected="True"
 	Name="samplesTextEditorDockableContent">
 	
 	<!--	IsBusy="{Binding ElementName=ucekbX, Path=VM.IsBusy}"
 								BusyContent="{Binding ElementName=ucekbX, Path=VM.BusyMessage}">-->
 	<DockPanel>
-		<ToolBar
+	<!--	<ToolBar
 		 DockPanel.Dock="Top">
 			<ToolBar.Resources>
 				<Style
@@ -99,9 +100,9 @@
 				SelectedItem="{Binding SyntaxHighlighting, ElementName=textEditor}"
 				ItemsSource="{Binding Source={x:Static avedit:HighlightingManager.Instance}, Path=HighlightingDefinitions}"
 				SelectionChanged="HighlightingComboBox_SelectionChanged" />
-		</ToolBar>
-		<avedit:TextEditor
-		 Name="textEditor"
+		</ToolBar>-->
+		<uc:MvvmTextEditor
+			x:Name="textEditor"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			SyntaxHighlighting="VBNET"
@@ -110,6 +111,6 @@
 			TextChanged="TextEditor_TextChanged"
 			ShowLineNumbers="True"
 			KeyDown="TextEditor_KeyDown"
-		></avedit:TextEditor>
+		></uc:MvvmTextEditor>
 	</DockPanel>
 </UserControl >

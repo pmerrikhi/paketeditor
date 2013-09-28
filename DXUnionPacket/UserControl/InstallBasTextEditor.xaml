@@ -10,127 +10,21 @@
 	
 	
 	<DockPanel>
-		<ToolBarTray
-			DockPanel.Dock="Top">
-			<ToolBar	>
-				<Button
-					DataContext="{uc:UICultureResource button_bas_install}"
-					ToolTip="{Binding Path=Current}"
-					Click="installBas">
-					<Image
-						Source="../Images/Add.png"
-						Height="20" Width="20" />
-				</Button>
-				<Button
-					DataContext="{uc:UICultureResource button_bas_remove}"
-					ToolTip="{Binding Path=Current}"
-					Click="removeBas">
-					<Image
-						Source="../Images/Remove.png"
-						Height="20" Width="20" />
-				</Button>
-				
-			</ToolBar>
-			<ToolBar>
-				<Button
-					Click="openFileClick">
-					<Image
-						Source="../Images/Open.png"
-						Height="16" />
-				</Button>
-				<Button
-					DataContext="{uc:UICultureResource button_save}"
-					ToolTip="{Binding Path=Current}"
-					Click="saveFileClick">
-					<Image
-						Source="../Images/Save.png"
-						Height="16" />
-				</Button>
-				<Button
-					DataContext="{uc:UICultureResource button_save_as}"
-					ToolTip="{Binding Path=Current}"
-					Click="saveAsFileClick">
-					<Image
-						Source="../Images/Save.png"
-						Height="16" />
-				</Button>
-				<Separator />
-				<Button
-					Command="Cut">
-					<Image
-						Source="../Images/Cut.png"
-						Height="16" />
-				</Button>
-				<Button
-					Command="Copy">
-					<Image
-						Source="../Images/Copy.png"
-						Height="16" />
-				</Button>
-				<Button
-					Command="Paste">
-					<Image
-						Source="../Images/Paste.png"
-						Height="16" />
-				</Button>
-				<Button
-					Command="Delete">
-					<Image
-						Source="../Images/Delete.png"
-						Height="16" />
-				</Button>
-				<Separator />
-				<Button
-					Command="Undo">
-					<Image
-						Source="../Images/Undo.png"
-						Height="16" />
-				</Button>
-				<Button
-					Command="Redo">
-					<Image
-						Source="../Images/Redo.png"
-						Height="16" />
-				</Button>
-				<Separator />
-				<CheckBox
-					IsChecked="{Binding ElementName=textEditor,Path=WordWrap}">
-					<Image
-						Source="../Images/WordWrap.png"
-						Height="16" />
-				</CheckBox>
-				<CheckBox
-					IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}">
-					<TextBlock
-						Width="16"
-						TextAlignment="Center">#</TextBlock>
-				</CheckBox>
-				<CheckBox
-					IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
-					<TextBlock
-						Width="16"
-						TextAlignment="Center">¶</TextBlock>
-				</CheckBox>
-				<ComboBox
-					Name="highlightingComboBox"
-					SelectedItem="{Binding SyntaxHighlighting, ElementName=textEditor}"
-					ItemsSource="{Binding Source={x:Static avedit:HighlightingManager.Instance}, Path=HighlightingDefinitions}"
-					SelectionChanged="HighlightingComboBox_SelectionChanged" />
-			</ToolBar>
-		</ToolBarTray>
-		<avedit:TextEditor
-			Name="textEditor"
+
+		<uc:MvvmTextEditor
+			x:Name="textEditor"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			SyntaxHighlighting="VBNET"
 			FontSize="12pt"
 			FontFamily="Consolas"
-			TextChanged="TextEditor_TextChanged"
 			ShowLineNumbers="True"
-			dd:DragDrop.IsDropTarget="True"
-			dd:DragDrop.DropHandler="{Binding}"
 			PreviewMouseHover="TextEditor_MouseHover"
+			Drop="TextEditor_Drop"
 			KeyDown="TextEditor_KeyDown"
-		></avedit:TextEditor>
+		></uc:MvvmTextEditor>
+	<!--
+			dd:DragDrop.DropHandler="{Binding}"
+			dd:DragDrop.IsDropTarget="True"-->
 	</DockPanel>
 </UserControl >

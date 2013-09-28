@@ -24,7 +24,7 @@
 			
 			</MenuItem>
 			<MenuItem DataContext="{uc:UICultureResource menu_view}" Header="{Binding Path=Current}">
-			<!--	<MenuItem Name="menu_view_description" DataContext="{uc:UICultureResource menu_view_description}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
+				<!--	<MenuItem Name="menu_view_description" DataContext="{uc:UICultureResource menu_view_description}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
 				<MenuItem Name="menu_view_installers" DataContext="{uc:UICultureResource menu_view_installers}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
 				<MenuItem Name="menu_view_code" DataContext="{uc:UICultureResource menu_view_code}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>
 				<MenuItem Name="menu_view_tree" DataContext="{uc:UICultureResource menu_view_tree}" Header="{Binding Path=Current}" Click="MenuItem_Click"/>-->
@@ -44,6 +44,11 @@
 				</MenuItem>
 			</MenuItem>
 		</Menu>
+		<uc:ToolBarTray
+			DockPanel.Dock="Top"
+		>
+		
+		</uc:ToolBarTray>
 		<ad:DockingManager
 			Name="DockMan"
 			Loaded="DockMan_Loaded"
@@ -82,7 +87,7 @@
 						</ad:DockableContent>
 					</ad:DockablePane>
 					<ad:DockablePane
-						Name="DP2"
+						Name="DPeditors"
 						ShowHeader="True">
 						<ad:DockableContent
 							Name="d"
@@ -91,14 +96,13 @@
 							<uc:SampleTextEditor
 								x:Name="Sample"/>
 						</ad:DockableContent>
-						<ad:DockableContent
+						<!--						<ad:DockableContent
 							Name="e"
 							DataContext="{uc:UICultureResource panel_bas}" Title="{Binding Path=Current}"
 						>
 							
-							<uc:InstallBasTextEditor x:Name="BAS"
-							/>
-						</ad:DockableContent>
+							<uc:InstallBasTextEditor x:Name="BAS"/>
+						</ad:DockableContent>-->
 					
 					</ad:DockablePane>
 				

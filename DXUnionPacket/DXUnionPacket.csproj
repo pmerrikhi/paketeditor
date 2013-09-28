@@ -89,9 +89,6 @@
     <Reference Include="CmdLine">
       <HintPath>lib\CmdLine.dll</HintPath>
     </Reference>
-    <Reference Include="GongSolutions.Wpf.DragDrop">
-      <HintPath>lib\GongSolutions.Wpf.DragDrop.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>lib\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
@@ -165,6 +162,7 @@
       <DependentUpon>InstallerTree.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserControl\MvvmTextEditor.cs" />
     <Compile Include="UserControl\SampleDescriptionControl.xaml.cs">
       <DependentUpon>SampleDescriptionControl.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -177,9 +175,15 @@
       <DependentUpon>SampleTextEditor.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserControl\ToolBarTray.xaml.cs">
+      <DependentUpon>ToolBarTray.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UserControl\UICultureResourceExtension.cs" />
     <Compile Include="UserControl\UICultureString.cs" />
+    <Compile Include="ViewModel\InstallBasViewModel.cs" />
     <Compile Include="ViewModel\InstallersDirectory.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\Sample.cs" />
     <Compile Include="ViewModel\Samples.cs" />
   </ItemGroup>
@@ -191,6 +195,7 @@
     <Page Include="UserControl\SamplesTree.xaml" />
     <Page Include="UserControl\SampleTextEditor.xaml" />
     <Page Include="UserControl\SharedResources.xaml" />
+    <Page Include="UserControl\ToolBarTray.xaml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -248,6 +253,10 @@
     <Folder Include="ViewModel" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\GongSolutions.Wpf.DragDrop\GongSolutions.Wpf.DragDrop.csproj">
+      <Project>{0C6674CC-6D49-414A-9B41-D4E175028FFB}</Project>
+      <Name>GongSolutions.Wpf.DragDrop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DXInstaller\DXInstaller.csproj">
       <Project>{4192BF11-5C93-48B5-BF04-47F4A56E0E0F}</Project>
       <Name>DXInstaller</Name>

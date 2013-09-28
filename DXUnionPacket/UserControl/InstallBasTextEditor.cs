@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Resources;
 using AvalonEdit.Sample;
+using DXInstaller;
 using DXUnionPacket.ViewModel;
 using GongSolutions.Wpf.DragDrop;
 using ICSharpCode.AvalonEdit;
@@ -30,204 +32,226 @@ using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Microsoft.Win32;
 using MVVm.Core;
+using StructureMap;
 
 namespace DXUnionPacket.UserControl
 {
 	/// <summary>
 	/// Interaction logic for SampleTextEditor.xaml
 	/// </summary>
-	public partial class InstallBasTextEditor : System.Windows.Controls.UserControl, IDropTarget
+	public partial class InstallBasTextEditor : System.Windows.Controls.UserControl
 	{
-		
-//		public Samples VM
-//		{
-//			get{
-//				return  StructureMap.ObjectFactory.GetInstance<DXUnionPacket.ViewModel.Samples>();
-//
-//			}
-//		}
+		private InstallBasViewModel _vm;
+		public InstallBasViewModel VM
+		{
+			get{
+				if(_vm == null)
+				{
+					_vm = ObjectFactory.GetInstance<InstallBasViewModel>();
+				}
+				return _vm;
+			}
+		}
 		public InstallBasTextEditor()
 		{
 			try{
 				InitializeComponent();
-				this.DataContext = this;
-//				VM.Mediator.Register(this);
-//				this.isAnotherItem = true;
-//				this.textEditor.Text = VM.SampleList.CurrentItem.Text;
-//				this.isAnotherItem = false;
+				this.DataContext = VM;
+//				this.textEditor.Text = Guid.NewGuid().ToString();
 			}catch(Exception ex)
 			{
 				
-				this.isAnotherItem = false;
-				ex.StackTrace.ToLower();
 			}
 		}
-		
-		bool isAnotherItem;
-		void TextEditor_TextChanged(object sender, EventArgs e)
-		{
-			if(!isAnotherItem)
-			{
-//				this.VM.SampleList.CurrentItem.Text = textEditor.Text;
-			}
-		}
-
 		
 		string currentFileName;
 		
 		void openFileClick(object sender, RoutedEventArgs e)
 		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
-			dlg.FilterIndex = 0;
-			dlg.CheckFileExists = true;
-			if (dlg.ShowDialog() ?? false) {
-				currentFileName = dlg.FileName;
-				textEditor.Load(currentFileName);
-				textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(currentFileName));
-			}
+//			OpenFileDialog dlg = new OpenFileDialog();
+//			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+//			dlg.FilterIndex = 0;
+//			dlg.CheckFileExists = true;
+//			if (dlg.ShowDialog() ?? false) {
+//				currentFileName = dlg.FileName;
+//				textEditor.Load(currentFileName);
+//				textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(currentFileName));
+//			}
 		}
 		
 		void saveFileClick(object sender, EventArgs e)
 		{
-			if (currentFileName == null) {
-				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
-				dlg.FilterIndex = 0;
-				if (dlg.ShowDialog() ?? false) {
-					currentFileName = dlg.FileName;
-				} else {
-					return;
-				}
-			}
-			textEditor.Save(currentFileName);
+//			if (currentFileName == null) {
+//				SaveFileDialog dlg = new SaveFileDialog();
+//				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+//				dlg.FilterIndex = 0;
+//				if (dlg.ShowDialog() ?? false) {
+//					currentFileName = dlg.FileName;
+//				} else {
+//					return;
+//				}
+//			}
+//			textEditor.Save(currentFileName);
 		}
 		void saveAsFileClick(object sender, EventArgs e)
 		{
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
-			dlg.FilterIndex = 0;
-			if (dlg.ShowDialog() ?? false) {
-				currentFileName = dlg.FileName;
-			} else {
-				return;
-			}
-			textEditor.Save(currentFileName);
+//			SaveFileDialog dlg = new SaveFileDialog();
+//			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+//			dlg.FilterIndex = 0;
+//			if (dlg.ShowDialog() ?? false) {
+//				currentFileName = dlg.FileName;
+//			} else {
+//				return;
+//			}
+//			textEditor.Save(currentFileName);
 		}
 		FoldingManager foldingManager;
 		AbstractFoldingStrategy foldingStrategy;
 		
 		void HighlightingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (textEditor.SyntaxHighlighting == null) {
-				foldingStrategy = null;
-			} else {
-				switch (textEditor.SyntaxHighlighting.Name) {
-					case "XML":
-						foldingStrategy = new XmlFoldingStrategy();
-						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.DefaultIndentationStrategy();
-						break;
-					case "C#":
-					case "C++":
-					case "PHP":
-					case "Java":
-						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.CSharp.CSharpIndentationStrategy(textEditor.Options);
-						foldingStrategy = new BraceFoldingStrategy();
-						break;
-					default:
-						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.DefaultIndentationStrategy();
-						foldingStrategy = null;
-						break;
-				}
-			}
-			if (foldingStrategy != null) {
-				if (foldingManager == null)
-					foldingManager = FoldingManager.Install(textEditor.TextArea);
-				foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
-			} else {
-				if (foldingManager != null) {
-					FoldingManager.Uninstall(foldingManager);
-					foldingManager = null;
-				}
-			}
+//			if (textEditor.SyntaxHighlighting == null) {
+//				foldingStrategy = null;
+//			} else {
+//				switch (textEditor.SyntaxHighlighting.Name) {
+//					case "XML":
+//						foldingStrategy = new XmlFoldingStrategy();
+//						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.DefaultIndentationStrategy();
+//						break;
+//					case "C#":
+//					case "C++":
+//					case "PHP":
+//					case "Java":
+//						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.CSharp.CSharpIndentationStrategy(textEditor.Options);
+//						foldingStrategy = new BraceFoldingStrategy();
+//						break;
+//					default:
+//						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.DefaultIndentationStrategy();
+//						foldingStrategy = null;
+//						break;
+//				}
+//			}
+//			if (foldingStrategy != null) {
+//				if (foldingManager == null)
+//					foldingManager = FoldingManager.Install(textEditor.TextArea);
+//				foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+//			} else {
+//				if (foldingManager != null) {
+//					FoldingManager.Uninstall(foldingManager);
+//					foldingManager = null;
+//				}
+//			}
 		}
 		
 		void foldingUpdateTimer_Tick(object sender, EventArgs e)
 		{
-			if (foldingStrategy != null) {
-				foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
-			}
+//			if (foldingStrategy != null) {
+//				foldingStrategy.UpdateFoldings(foldingManager, textEditor.Document);
+//			}
 		}
 		
 		void TextEditor_KeyDown(object sender, KeyEventArgs e)
 		{
 			
-			if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemPlus)
-			{
-				textEditor.FontSize += 1;
-			}else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
-			{
-				textEditor.FontSize -= 1;
-			}
+//			if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemPlus)
+//			{
+//				textEditor.FontSize += 1;
+//			}else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
+//			{
+//				textEditor.FontSize -= 1;
+//			}
 		}
 		void installBas(object sender, EventArgs e)
 		{
-			String res = "Template/Install.bas";
-			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
+//			String res = "Template/Install.bas";
+//			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
 			
 		}
 		void removeBas(object sender, EventArgs e)
 		{
-			String res = "Template/Remove.bas";
-			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
+//			String res = "Template/Remove.bas";
+//			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
 		}
-		void IDropTarget.Drop(DropInfo dropInfo)
-		{
-			if(dropInfo.Data != null )
-			{
-				if(dropInfo.Data is Sample ){
-					try
-					{
-						Sample sample = dropInfo.Data as Sample;
-						TextLocation loc = textEditor.TextArea.Caret.Location;
-						textEditor.Text = textEditor.Text.Insert(textEditor.TextArea.Caret.Offset,sample.Text);
-					}
-					catch(Exception ex)
-					{
-						ex.StackTrace.ToLower();
-					}
-				}
-			}
-		}
-		void IDropTarget.DragOver(DropInfo dropInfo)
-		{
-			if(dropInfo.Data != null )
-			{
-				if(dropInfo.Data is Sample ){
-					dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
-					dropInfo.Effects = DragDropEffects.Copy;
-				}
-			}
-			
-		}
-		
-		void TextEditor_DragOver(object sender, DragEventArgs e)
-		{
-		}
-		
-		void TextEditor_MouseHover(object sender, MouseEventArgs e)
-		{
-			if(e.LeftButton == MouseButtonState.Pressed)
-			{
-				var pos = textEditor.GetPositionFromPoint(e.GetPosition(textEditor));
-				
-				var line = pos.Value.Line;
-				var column = pos.Value.Column;
+//		void IDropTarget.Drop(DropInfo dropInfo)
+//		{
+//			if(dropInfo.Data != null )
+//			{
+//				if(dropInfo.Data is Sample ){
+//					try
+//					{
+//						InsertText((dropInfo.Data as Sample).Text, dropInfo.Position);
+//					}
+//					catch(Exception ex)
+//					{
+//						ex.StackTrace.ToLower();
+//					}
+//				}
+//			}
+//		}
+//		void IDropTarget.DragOver(DropInfo dropInfo)
+//		{
+//			if(dropInfo.Data != null )
+//			{
+//				if(dropInfo.Data is Sample ){
+//					dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+//					dropInfo.Effects = DragDropEffects.Copy;
+//				} else{
+//					dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+//					dropInfo.Effects = DragDropEffects.Copy;
+//				}
+//			}
+//
+//		}
 
-				var offset = textEditor.Document.GetOffset(line, column);
-				textEditor.TextArea.Caret.Offset = offset;
-			}
+		object sync = new Object();
+		void TextEditor_Drop(object sender, DragEventArgs e)
+		{
+//			Point pos = e.GetPosition(sender as IInputElement);
+//			System.Windows.DataObject o = e.Data as System.Windows.DataObject;
+//			string[] formats = o.GetFormats();
+//			string SAMPLE_FORMAT = "DXUnionPacket.ViewModel.Sample";
+//			string MSI_INSTALL_FORMAT ="DXInstaller.MSIInstaller";
+//			string GONG_DD_FORMAT ="GongSolutions.Wpf.DragDrop.DropInfo";
+//			string text = "";
+//			
+//			foreach(string format in formats)
+//			{
+//				if(format.Equals(SAMPLE_FORMAT))
+//				{
+//					if(o.GetDataPresent(SAMPLE_FORMAT)){
+//						lock(sync){
+//							Object oo =  o.GetData(SAMPLE_FORMAT) ;
+//							Sample s = o.GetData(SAMPLE_FORMAT, true) as Sample;
+//							text = s.Text;
+//							break;
+//						}
+//					}
+//				}
+//				if(format.Equals(MSI_INSTALL_FORMAT))
+//				{
+//					MSIInstaller i = o.GetData(MSI_INSTALL_FORMAT) as MSIInstaller;
+//					text = i.Guid;
+//					break;
+//				}
+//			}
+//			if(!String.IsNullOrEmpty(text))
+//			{
+//				InsertText(text, pos);
+//			}
 		}
+
+		private void InsertText(String text, Point posPoint)
+		{
+//			var pos = textEditor.GetPositionFromPoint(posPoint);
+//			var line = pos.Value.Line;
+//			var column = pos.Value.Column;
+//
+//			var offset = textEditor.Document.GetOffset(line, column);
+//			textEditor.TextArea.Caret.Offset = offset;
+//
+//			textEditor.Document.Insert(textEditor.TextArea.Caret.Offset, text);
+		}
+
 		
 	}
 	public static class TextEditorExtensions
