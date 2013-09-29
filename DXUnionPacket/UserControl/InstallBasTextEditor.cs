@@ -56,54 +56,69 @@ namespace DXUnionPacket.UserControl
 		{
 			try{
 				InitializeComponent();
+				VM.Mediator.Register(this);
 				this.DataContext = VM;
 //				this.textEditor.Text = Guid.NewGuid().ToString();
 			}catch(Exception ex)
 			{
-				
+				ex.ToString();
 			}
 		}
 		
-		string currentFileName;
-		
-		void openFileClick(object sender, RoutedEventArgs e)
+		[MediatorMessageSink(MainWindowViewModel.TOOLBAR_OPEN_FILE)]
+		void openFile(object dummy)
 		{
-//			OpenFileDialog dlg = new OpenFileDialog();
-//			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
-//			dlg.FilterIndex = 0;
-//			dlg.CheckFileExists = true;
-//			if (dlg.ShowDialog() ?? false) {
-//				currentFileName = dlg.FileName;
-//				textEditor.Load(currentFileName);
-//				textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(currentFileName));
-//			}
+			if(this.VM.IsActive)
+			{
+				OpenFileDialog dlg = new OpenFileDialog();
+				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+				dlg.FilterIndex = 0;
+				dlg.CheckFileExists = true;
+				if (dlg.ShowDialog() ?? false) {
+					this.VM.CurrentFileName = dlg.FileName;
+					this.VM.IsFile = true;
+					textEditor.Load(this.VM.CurrentFileName);
+					textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(this.VM.CurrentFileName));
+				}
+			}
 		}
 		
-		void saveFileClick(object sender, EventArgs e)
+		[MediatorMessageSink(MainWindowViewModel.TOOLBAR_SAVE_FILE)]
+		void saveFile(object sender)
 		{
-//			if (currentFileName == null) {
-//				SaveFileDialog dlg = new SaveFileDialog();
-//				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
-//				dlg.FilterIndex = 0;
-//				if (dlg.ShowDialog() ?? false) {
-//					currentFileName = dlg.FileName;
-//				} else {
-//					return;
-//				}
-//			}
-//			textEditor.Save(currentFileName);
+			if(this.VM.IsActive)
+			{
+				if (this.VM.CurrentFileName == null || !this.VM.IsFile) {
+					SaveFileDialog dlg = new SaveFileDialog();
+					dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+					dlg.FilterIndex = 0;
+					if (dlg.ShowDialog() ?? false) {
+						this.VM.CurrentFileName = dlg.FileName;
+						this.VM.IsFile = true;
+					} else {
+						return;
+					}
+				}
+				textEditor.Save(this.VM.CurrentFileName);
+			}
 		}
-		void saveAsFileClick(object sender, EventArgs e)
+		
+		[MediatorMessageSink(MainWindowViewModel.TOOLBAR_SAVE_AS_FILE)]
+		void saveAsFile(object sender)
 		{
-//			SaveFileDialog dlg = new SaveFileDialog();
-//			dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
-//			dlg.FilterIndex = 0;
-//			if (dlg.ShowDialog() ?? false) {
-//				currentFileName = dlg.FileName;
-//			} else {
-//				return;
-//			}
-//			textEditor.Save(currentFileName);
+			if(this.VM.IsActive)
+			{
+				SaveFileDialog dlg = new SaveFileDialog();
+				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+				dlg.FilterIndex = 0;
+				if (dlg.ShowDialog() ?? false) {
+					this.VM.CurrentFileName = dlg.FileName;
+					this.VM.IsFile = true;
+				} else {
+					return;
+				}
+				textEditor.Save(this.VM.CurrentFileName);
+			}
 		}
 		FoldingManager foldingManager;
 		AbstractFoldingStrategy foldingStrategy;
@@ -161,17 +176,7 @@ namespace DXUnionPacket.UserControl
 //				textEditor.FontSize -= 1;
 //			}
 		}
-		void installBas(object sender, EventArgs e)
-		{
-//			String res = "Template/Install.bas";
-//			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
-			
-		}
-		void removeBas(object sender, EventArgs e)
-		{
-//			String res = "Template/Remove.bas";
-//			this.textEditor.Text = this.GetType().Assembly.GetStringFromResource(res);
-		}
+
 //		void IDropTarget.Drop(DropInfo dropInfo)
 //		{
 //			if(dropInfo.Data != null )
@@ -206,67 +211,57 @@ namespace DXUnionPacket.UserControl
 		object sync = new Object();
 		void TextEditor_Drop(object sender, DragEventArgs e)
 		{
-//			Point pos = e.GetPosition(sender as IInputElement);
-//			System.Windows.DataObject o = e.Data as System.Windows.DataObject;
-//			string[] formats = o.GetFormats();
-//			string SAMPLE_FORMAT = "DXUnionPacket.ViewModel.Sample";
-//			string MSI_INSTALL_FORMAT ="DXInstaller.MSIInstaller";
-//			string GONG_DD_FORMAT ="GongSolutions.Wpf.DragDrop.DropInfo";
-//			string text = "";
-//			
-//			foreach(string format in formats)
-//			{
-//				if(format.Equals(SAMPLE_FORMAT))
-//				{
-//					if(o.GetDataPresent(SAMPLE_FORMAT)){
-//						lock(sync){
-//							Object oo =  o.GetData(SAMPLE_FORMAT) ;
-//							Sample s = o.GetData(SAMPLE_FORMAT, true) as Sample;
-//							text = s.Text;
-//							break;
-//						}
-//					}
-//				}
-//				if(format.Equals(MSI_INSTALL_FORMAT))
-//				{
-//					MSIInstaller i = o.GetData(MSI_INSTALL_FORMAT) as MSIInstaller;
-//					text = i.Guid;
-//					break;
-//				}
-//			}
-//			if(!String.IsNullOrEmpty(text))
-//			{
-//				InsertText(text, pos);
-//			}
+			Point pos = e.GetPosition(sender as IInputElement);
+			System.Windows.DataObject o = e.Data as System.Windows.DataObject;
+			string[] formats = o.GetFormats();
+			string SAMPLE_FORMAT = "DXUnionPacket.ViewModel.Sample";
+			string MSI_INSTALL_FORMAT ="DXInstaller.MSIInstaller";
+			string GONG_DD_FORMAT ="GongSolutions.Wpf.DragDrop.DropInfo";
+			string text = "";
+			
+			foreach(string format in formats)
+			{
+				if(format.Equals(SAMPLE_FORMAT))
+				{
+					if(o.GetDataPresent(SAMPLE_FORMAT)){
+						lock(sync){
+							Object oo =  o.GetData(SAMPLE_FORMAT) ;
+							Sample s = o.GetData(SAMPLE_FORMAT, true) as Sample;
+							text = s.Text;
+							break;
+						}
+					}
+				}
+				if(format.Equals(MSI_INSTALL_FORMAT))
+				{
+					MSIInstaller i = o.GetData(MSI_INSTALL_FORMAT) as MSIInstaller;
+					text = i.Guid;
+					break;
+				}
+			}
+			if(!String.IsNullOrEmpty(text))
+			{
+				InsertText(text, pos);
+			}
 		}
 
 		private void InsertText(String text, Point posPoint)
 		{
-//			var pos = textEditor.GetPositionFromPoint(posPoint);
-//			var line = pos.Value.Line;
-//			var column = pos.Value.Column;
-//
-//			var offset = textEditor.Document.GetOffset(line, column);
-//			textEditor.TextArea.Caret.Offset = offset;
-//
-//			textEditor.Document.Insert(textEditor.TextArea.Caret.Offset, text);
+			var pos = textEditor.GetPositionFromPoint(posPoint);
+			var line = pos.Value.Line;
+			var column = pos.Value.Column;
+
+			var offset = textEditor.Document.GetOffset(line, column);
+			textEditor.TextArea.Caret.Offset = offset;
+
+			textEditor.Document.Insert(textEditor.TextArea.Caret.Offset, text);
 		}
 
 		
 	}
 	public static class TextEditorExtensions
 	{
-		public static  String GetStringFromResource(this  Assembly ass, string psResourceName)
-		{
-			String r = "";
-			Uri uri = new Uri("pack://application:,,,/" +ass.FullName +";component/" +psResourceName, UriKind.RelativeOrAbsolute);
-			StreamResourceInfo sri = Application.GetResourceStream(uri);
-			using(StreamReader sr = new StreamReader(sri.Stream))
-			{
-				r =sr.ReadToEnd();
-			}
-			return r;
-		}
+
 		public static string GetWordUnderMouse(this TextDocument document, TextViewPosition position)
 		{
 			string wordHovered = string.Empty;

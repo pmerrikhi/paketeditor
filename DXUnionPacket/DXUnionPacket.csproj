@@ -219,6 +219,7 @@
     <Resource Include="Images\Add.png" />
     <Resource Include="Images\Remove.png" />
     <None Include="Images\package-manager-icon.png" />
+    <Resource Include="Images\SaveAll.png" />
     <None Include="lib\AvalonDock.dll" />
     <None Include="lib\AvalonDock.Themes.dll" />
     <None Include="lib\CmdLine.dll" />

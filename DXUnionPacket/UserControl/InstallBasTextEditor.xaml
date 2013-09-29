@@ -9,22 +9,19 @@
              Name="InstallBasTextEditorDockableContent">
 	
 	
-	<DockPanel>
-
-		<uc:MvvmTextEditor
-			x:Name="textEditor"
-			HorizontalAlignment="Stretch"
-			VerticalAlignment="Stretch"
-			SyntaxHighlighting="VBNET"
-			FontSize="12pt"
-			FontFamily="Consolas"
-			ShowLineNumbers="True"
-			PreviewMouseHover="TextEditor_MouseHover"
-			Drop="TextEditor_Drop"
-			KeyDown="TextEditor_KeyDown"
-		></uc:MvvmTextEditor>
-	<!--
-			dd:DragDrop.DropHandler="{Binding}"
-			dd:DragDrop.IsDropTarget="True"-->
-	</DockPanel>
-</UserControl >
+	<uc:MvvmTextEditor
+		x:Name="textEditor"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		SyntaxHighlighting="VBNET"
+		FontSize="12pt"
+		FontFamily="Consolas"
+		ShowEndOfLine="{Binding IsShowEndOfLine}"
+		ShowLineNumbersBindable="{Binding IsShowLineNumbers}"
+		WordWrapBindable="{Binding IsWordWrap}"
+		Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+		
+		Drop="TextEditor_Drop"
+		KeyDown="TextEditor_KeyDown"
+	></uc:MvvmTextEditor>
+</UserControl>

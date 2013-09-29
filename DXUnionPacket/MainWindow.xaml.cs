@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,13 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+
 using AvalonDock;
 using DXUnionPacket.DataModel;
 using DXUnionPacket.UserControl;
 using DXUnionPacket.ViewModel;
 using ICSharpCode.AvalonEdit.Highlighting;
+using Microsoft.Win32;
 using MVVm.Core;
 using StructureMap;
 
@@ -111,15 +114,71 @@ namespace DXUnionPacket
 			m.IsChecked = _reset_views;
 			
 		}
-		UICultureResourceExtension ui_strings = new UICultureResourceExtension();
-		
-		[MediatorMessageSink(MainWindowViewModel.TOOLBAR_ADD_BAS)]
-		void AddEditor(object dummy)
+		[MediatorMessageSink(MainWindowViewModel.TOOLBAR_OPEN_FILE)]
+		void openFile(object dummy)
 		{
-			DockableContent dc = new DockableContent();
-			string dc_Name = "editor_" + DPeditors.Items.Count.ToString();
+			if(this.VM.ActiveEditor == null)
+			{
+				OpenFileDialog dlg = new OpenFileDialog();
+				dlg.Filter = "(*.bas)|*.bas|(*.vbs)|*.vbs|(*.txt)|*.txt|All files (*.*)|*.*";
+				dlg.FilterIndex = 0;
+				dlg.CheckFileExists = true;
+				if (dlg.ShowDialog() ?? false) {
+					
+					InstallBasTextEditor bas = this.AddEditor("");
+					bas.VM.CurrentFileName = dlg.FileName;
+					bas.textEditor.Load(bas.VM.CurrentFileName);
+					bas.textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(bas.VM.CurrentFileName));
+				}
+			}
+		}
+		[MediatorMessageSink(MainWindowViewModel.TOOLBAR_ADD_BAS)]
+		void AddEditorMediator(Object dummy)
+		{
+			if(dummy == null)
+			{
+				dummy = "";
+			}
+			this.AddEditor(dummy.ToString());
+			
+		}
+		
+		void DockMan_ActiveContentChanged(object sender, EventArgs e)
+		{
+			foreach(var editor in this.VM.Editors)
+			{
+				editor.IsActive = false;
+			}
+			
+			DockableContent mc = DockMan.ActiveContent as DockableContent;
+			if(mc != null && mc.Content != null && mc.Content is InstallBasTextEditor)
+			{
+				(mc.Content as InstallBasTextEditor).VM.IsActive = true;
+				this.VM.OnPropertyChanged("ActiveEditor");
+			} else {
+				if(VM.ActiveEditor != null && VM.ActiveEditor.IsActive)
+				{
+					VM.ActiveEditor.IsActive = false;
+					this.VM.OnPropertyChanged("ActiveEditor");
+				}
+			}
+		}
+		InstallBasTextEditor AddEditor(string InstallBasAction)
+		{
+			ManagedContent mc = null;
+			if(DockMan.ActiveContent == null)
+			{
+				mc = DockMan.DockableContents.First();
+			}else{
+				mc = DockMan.ActiveContent;
+			}
+			
+			DockablePane cPane = mc.ContainerPane as DockablePane;
+			
+			string dc_Name = "editor_" + (VM.Editors.Count + 1).ToString();
+			
 			DockableContent dc_prev = null;
-			foreach(var item in DPeditors.Items)
+			foreach(var item in cPane.Items)
 			{
 				dc_prev = item as DockableContent;
 				if(dc_prev.Name.Equals(dc_Name))
@@ -131,19 +190,50 @@ namespace DXUnionPacket
 			}
 			if(dc_prev != null )
 			{
-				dc_Name += "_" + DPeditors.Items.Count.ToString();
+				dc_Name += "_" + cPane.Items.Count.ToString();
 			}
+			
+			
+			DockableContent dc = new DockableContent();
 			dc.Name = dc_Name;
+			dc.Title = dc_Name;
+			cPane.Items.Add(dc);
+			
 			
 			InstallBasTextEditor bas = new InstallBasTextEditor();
-			
-			Binding bi = new Binding("Current");
-			bi.Source = ui_strings;
-			dc.SetBinding(DockableContent.TitleProperty, bi);
+			bas.VM.CurrentFileName = dc_Name;
+			if(!String.IsNullOrEmpty(InstallBasAction))
+			{
+				if(InstallBasAction.Equals(MainWindowViewModel.TOOLBAR_ADD_BAS_ADD_INSTALL))
+				{
+					bas.VM.InstallBas();
+				}else if(InstallBasAction.Equals(MainWindowViewModel.TOOLBAR_ADD_BAS_ADD_REMOVE))
+				{
+					bas.VM.RemoveBas();
+				}
+			}
 			
 			dc.Content = bas;
-			DPeditors.Items.Add(dc);
+			
+			dc.Closing += delegate(object sender, CancelEventArgs e) 
+			{
+				this.VM.ActiveEditor.IsActive = false;
+				this.VM.Editors.Remove(bas.VM);
+			};
+			dc.Activate();
+			
+			this.VM.Editors.Add(bas.VM);
+			bas.VM.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
+			{
+				if(e.PropertyName.Equals("CurrentFileName"))
+				{
+					dc.Title = Path.GetFileName(bas.VM.CurrentFileName);
+				}
+			};
+			return bas;
 		}
+		
+
 		
 	}
 }

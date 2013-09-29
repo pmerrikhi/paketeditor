@@ -51,8 +51,8 @@
 	</uc:UIString>
 	
 	<uc:UIString  x:Key="button_browse">
-		<uc:UICultureString UICulture="en-US" Value="Browse" />
-		<uc:UICultureString UICulture="de-DE" Value="Durchsuchen"/>
+		<uc:UICultureString UICulture="en-US" Value="Open" />
+		<uc:UICultureString UICulture="de-DE" Value="Öffnen"/>
 	</uc:UIString>
 	<uc:UIString  x:Key="button_save">
 		<uc:UICultureString UICulture="en-US" Value="Save" />

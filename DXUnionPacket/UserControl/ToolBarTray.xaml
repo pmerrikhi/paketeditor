@@ -25,6 +25,8 @@
 	</ToolBar>
 	<ToolBar>
 		<Button
+			DataContext="{uc:UICultureResource button_browse}"
+			ToolTip="{Binding Path=Current}"
 			Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dx:MainWindow}, Path=VM.OpenFileCommand}">
 			<Image
 				Source="../Images/Open.png"
@@ -43,9 +45,8 @@
 			DataContext="{uc:UICultureResource button_save_as}"
 			ToolTip="{Binding Path=Current}"	
 			Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dx:MainWindow}, Path=VM.SaveAsFileCommand}">
-			
 			<Image
-				Source="../Images/Save.png"
+				Source="../Images/SaveAll.png"
 				Height="16" />
 		</Button>
 		<Separator />
@@ -88,27 +89,28 @@
 		</Button>
 		<Separator />
 		<CheckBox
-			IsChecked="{Binding ElementName=textEditor,Path=WordWrap}">
+			IsChecked="{Binding Path=ActiveEditor.IsWordWrap}">
 			<Image
 				Source="../Images/WordWrap.png"
 				Height="16" />
 		</CheckBox>
 		<CheckBox
-			IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}">
+			IsChecked="{Binding Path=ActiveEditor.IsShowLineNumbers}">
 			<TextBlock
 				Width="16"
 				TextAlignment="Center">#</TextBlock>
 		</CheckBox>
 		<CheckBox
-			IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
+				IsChecked="{Binding Path=ActiveEditor.IsShowEndOfLine}">
+<!--			IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}"-->
 			<TextBlock
 				Width="16"
 				TextAlignment="Center">¶</TextBlock>
 		</CheckBox>
-		<ComboBox
+	<!--	<ComboBox
 			Name="highlightingComboBox"
 			SelectedItem="{Binding SyntaxHighlighting, ElementName=textEditor}"
 			ItemsSource="{Binding Source={x:Static avedit:HighlightingManager.Instance}, Path=HighlightingDefinitions}"
-			SelectionChanged="HighlightingComboBox_SelectionChanged" />
+			SelectionChanged="HighlightingComboBox_SelectionChanged" />-->
 	</ToolBar>
 </ToolBarTray>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Window
 	x:Class="DXUnionPacket.MainWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -52,6 +52,7 @@
 		<ad:DockingManager
 			Name="DockMan"
 			Loaded="DockMan_Loaded"
+			ActiveContentChanged="DockMan_ActiveContentChanged"
 			
 			UseLayoutRounding="True">
 			<ad:ResizingPanel
@@ -64,45 +65,44 @@
 					
 					<ad:DockableContent
 						Name="a"
+						IsCloseable="False"
 						DataContext="{uc:UICultureResource panel_samples}" Title="{Binding Path=Current}"
 					>
 						<uc:SamplesTree />
 					</ad:DockableContent>
 					<ad:DockableContent
+						IsCloseable="False"
 						Name="b" DataContext="{uc:UICultureResource panel_installers}" Title="{Binding Path=Current}"
 					>
 						<uc:InstallerTree/>
 					</ad:DockableContent>
 				</ad:DockablePane>
 				<ad:ResizingPanel
-					Name="RPSide"
+					x:Name="RPSide"
 					Orientation="Vertical">
 					<ad:DockablePane
-						Name="DP1"
+						x:Name="DP1"
 						ShowHeader="True">
 						<ad:DockableContent
+							IsCloseable="False"
 							Name="c" DataContext="{uc:UICultureResource panel_description}" Title="{Binding Path=Current}"
 						>
 							<uc:SampleDescriptionControl/>
 						</ad:DockableContent>
 					</ad:DockablePane>
 					<ad:DockablePane
-						Name="DPeditors"
-						ShowHeader="True">
+						x:Name="DPeditors"
+						ShowTabs="True"
+						ShowHeader="True"
+					>
 						<ad:DockableContent
 							Name="d"
+							IsCloseable="False"
 							DataContext="{uc:UICultureResource panel_sample}" Title="{Binding Path=Current}"
 						>
 							<uc:SampleTextEditor
 								x:Name="Sample"/>
 						</ad:DockableContent>
-						<!--						<ad:DockableContent
-							Name="e"
-							DataContext="{uc:UICultureResource panel_bas}" Title="{Binding Path=Current}"
-						>
-							
-							<uc:InstallBasTextEditor x:Name="BAS"/>
-						</ad:DockableContent>-->
 					
 					</ad:DockablePane>
 				

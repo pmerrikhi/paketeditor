@@ -6,7 +6,11 @@
  * 
  */
 using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Reflection;
 using System.Windows.Input;
+
 using MVVm.Core;
 
 namespace DXUnionPacket.ViewModel
@@ -88,16 +92,82 @@ namespace DXUnionPacket.ViewModel
 			get{
 				if(_saveAsFile == null){
 					_saveAsFile = new RelayCommand(	param => {
-					                             	this.Mediator.NotifyColleagues(TOOLBAR_SAVE_AS_FILE, "");
-					                             }, param => {
-					                             	return true;
-					                             });
+					                               	this.Mediator.NotifyColleagues(TOOLBAR_SAVE_AS_FILE, "");
+					                               }, param => {
+					                               	return true;
+					                               });
 				}
 				return _saveAsFile as ICommand;
 			}
 		}
 		public MainWindowViewModel()
 		{
+		}
+		
+		private InstallBasViewModel _activeEditor;
+		public InstallBasViewModel ActiveEditor
+		{
+			get{
+				if(_activeEditor !=  null)
+				{
+					if(!_activeEditor.IsActive)
+					{
+						if(Editors.Count > 0)
+						{
+							foreach(InstallBasViewModel editor in this.Editors)
+							{
+								if(editor.IsActive)
+								{
+									_activeEditor = editor;
+									ActiveEditorPropertiesChanged();
+									break;
+								}
+							}
+						}
+					}
+				} else {
+					if(Editors.Count > 0)
+					{
+						foreach(InstallBasViewModel editor in this.Editors)
+						{
+							if(editor.IsActive)
+							{
+								_activeEditor = editor;
+								ActiveEditorPropertiesChanged();
+								break;
+							}
+						}
+					}
+				}
+				return _activeEditor;
+			}
+		}
+		private void ActiveEditorPropertiesChanged()
+		{
+			if(_activeEditor != null)
+			{
+				Type activeEditorType = typeof(InstallBasViewModel);
+				PropertyInfo[] props = activeEditorType.GetProperties();
+				foreach(var pi in props)
+				{
+					_activeEditor.OnPropertyChanged(pi.Name);
+				}
+			}
+		}
+		private ObservableCollection<InstallBasViewModel> _editors;
+		public ObservableCollection<InstallBasViewModel> Editors
+		{
+			get{
+				if(_editors == null)
+				{
+					_editors = new ObservableCollection<InstallBasViewModel>();
+					this._editors.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs e) 
+					{
+						this.OnPropertyChanged("ActiveEditor");
+					};
+				}
+				return _editors;
+			}
 		}
 	}
 }

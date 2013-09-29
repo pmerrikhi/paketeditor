@@ -23,7 +23,6 @@ namespace DXUnionPacket
 			                                      	x.For<DXUnionPacket.ViewModel.Samples>().Singleton();
 			                                      	x.For<DXUnionPacket.ViewModel.InstallersDirectory>().Singleton();
 			                                      	x.For<DXUnionPacket.ViewModel.MainWindowViewModel>().Singleton();
-			                                      	x.For<DXUnionPacket.ViewModel.InstallBasViewModel>();
 			                                      });
 			
 			MainWindow window = new MainWindow();
