@@ -14,7 +14,7 @@
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
 		SyntaxHighlighting="{Binding SyntaxHighlighting}"
-		FontSize="{Binding FontSize}"
+		FontSize="{Binding FontSize, Mode=TwoWay}"
 		FontFamily="{Binding Font}"
 		ShowEndOfLine="{Binding IsShowEndOfLine}"
 		ShowLineNumbersBindable="{Binding IsShowLineNumbers}"

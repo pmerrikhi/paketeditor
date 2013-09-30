@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-
+using DXUnionPacket.ViewModel;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 
@@ -181,10 +181,20 @@ namespace DXUnionPacket.UserControl
 			{
 				if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemPlus)
 				{
-					this.FontSize += 1;
+					if(this.DataContext is InstallBasViewModel)
+					{
+						(this.DataContext as InstallBasViewModel).FontSize += 1;
+					}else{
+						this.FontSize += 1;
+					}
 				}else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
 				{
-					this.FontSize -= 1;
+					if(this.DataContext is InstallBasViewModel)
+					{
+						(this.DataContext as InstallBasViewModel).FontSize -= 1;
+					}else{
+						this.FontSize -= 1;
+					}
 				}
 			};
 		}
