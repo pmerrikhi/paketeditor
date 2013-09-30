@@ -18,7 +18,7 @@ namespace DXUnionPacket.ViewModel
 	/// <summary>
 	/// Description of Samples.
 	/// </summary>
-	public class Sample : MVVm.Core.MediatorEnabledViewModel<object>
+	public class Sample : InstallBasViewModel
 	{
 		private DataModel.Database _db
 		{

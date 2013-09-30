@@ -32,9 +32,14 @@
 				</MenuItem>
 			</MenuItem>
 			<MenuItem DataContext="{uc:UICultureResource menu_settings}" Header="{Binding Path=Current}">
-				<MenuItem DataContext="{uc:UICultureResource menu_settings_lang}" Header="{Binding Path=Current}">
+				<MenuItem					
+					HorizontalAlignment="Stretch"
+					HorizontalContentAlignment="Stretch"
+					DataContext="{uc:UICultureResource menu_settings_lang}" Header="{Binding Path=Current}">
 					
 					<ComboBox
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Stretch"
 						DataContext="{uc:UICultureResource menu_settings_lang}"
 						ItemsSource="{Binding }"
 						DisplayMemberPath="UICulture"

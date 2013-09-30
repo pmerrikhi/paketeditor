@@ -8,9 +8,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
-
 using MVVm.Core;
 
 namespace DXUnionPacket.ViewModel
@@ -28,6 +28,10 @@ namespace DXUnionPacket.ViewModel
 		public const String TOOLBAR_OPEN_FILE = "DXUnionPacket.OpenFile";
 		public const String TOOLBAR_SAVE_FILE = "DXUnionPacket.SaveFile";
 		public const String TOOLBAR_SAVE_AS_FILE = "DXUnionPacket.SaveAsFile";
+		
+		
+		public const String TOOLBAR_HIGHLIGHT_DEF = "DXUnionPacket.HighlightingDefinitions";
+		public const String TOOLBAR_FONT_FAMILY = "DXUnionPacket.FontFamily";
 		
 		
 		RelayCommand _addInstallBas;
@@ -161,7 +165,7 @@ namespace DXUnionPacket.ViewModel
 				if(_editors == null)
 				{
 					_editors = new ObservableCollection<InstallBasViewModel>();
-					this._editors.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs e) 
+					this._editors.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs e)
 					{
 						this.OnPropertyChanged("ActiveEditor");
 					};
@@ -169,5 +173,62 @@ namespace DXUnionPacket.ViewModel
 				return _editors;
 			}
 		}
+		private ObservableCollection<string> _fonts;
+		public ObservableCollection<string> Fonts
+		{
+			get{
+				if(_fonts == null)
+				{
+					_fonts = new ObservableCollection<string>();
+				}
+				return _fonts;
+			}
+		}
+		private ObservableCollection<double> _fontSizes;
+		public ObservableCollection<double> FontSizes
+		{
+			get{
+				if(_fontSizes == null)
+				{
+					_fontSizes = new ObservableCollection<double>();
+					for(int i = 7; i < 45; i++)
+					{
+						_fontSizes.Add(i);
+					}
+				}
+				return _fontSizes;
+			}
+		}
+		private ObservableCollection<string> _highlightingDefinitions;
+		public ObservableCollection<string> HighlightingDefinitions
+		{
+			get{
+				if(_highlightingDefinitions == null)
+				{
+					_highlightingDefinitions = new ObservableCollection<string>();
+				}
+				return _highlightingDefinitions;
+			}
+		}
+		
+
+		[MediatorMessageSink(TOOLBAR_HIGHLIGHT_DEF)]
+		void AddHighlightingDefinition(string definition)
+		{
+			if(!String.IsNullOrWhiteSpace(definition))
+			{
+				this.HighlightingDefinitions.Add(definition);
+			}
+		}
+		
+		[MediatorMessageSink(TOOLBAR_FONT_FAMILY)]
+		void AddFontFamily(string font)
+		{
+			if(!String.IsNullOrWhiteSpace(font))
+			{
+				this.Fonts.Add(font);
+			}
+		}
+		
 	}
 }

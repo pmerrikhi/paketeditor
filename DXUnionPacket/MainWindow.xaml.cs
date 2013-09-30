@@ -51,6 +51,16 @@ namespace DXUnionPacket
 				InitializeComponent();
 				this.DataContext = VM;
 				VM.Mediator.Register(this);
+				
+				foreach(var hd in ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.HighlightingDefinitions)
+				{
+					this.VM.Mediator.NotifyColleagues(MainWindowViewModel.TOOLBAR_HIGHLIGHT_DEF, hd.Name);
+				}
+				
+				foreach (FontFamily font in System.Windows.Media.Fonts.SystemFontFamilies)
+				{
+					this.VM.Mediator.NotifyColleagues(MainWindowViewModel.TOOLBAR_FONT_FAMILY, font.Source);
+				}
 				//DXUnionPacket.DataModel.Database db  = StructureMap.ObjectFactory.GetInstance<DXUnionPacket.DataModel.Database>();
 			}
 			catch (Exception ex)
@@ -128,7 +138,7 @@ namespace DXUnionPacket
 					InstallBasTextEditor bas = this.AddEditor("");
 					bas.VM.CurrentFileName = dlg.FileName;
 					bas.textEditor.Load(bas.VM.CurrentFileName);
-					bas.textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(bas.VM.CurrentFileName));
+					bas.textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(bas.VM.CurrentFileName)).Name;
 				}
 			}
 		}
@@ -201,6 +211,9 @@ namespace DXUnionPacket
 			
 			
 			InstallBasTextEditor bas = new InstallBasTextEditor();
+			bas.VM.SyntaxHighlighting = "VBNET";
+			bas.VM.Font = "Consolas";
+			bas.VM.FontSize =  12;
 			bas.VM.CurrentFileName = dc_Name;
 			if(!String.IsNullOrEmpty(InstallBasAction))
 			{
@@ -215,7 +228,7 @@ namespace DXUnionPacket
 			
 			dc.Content = bas;
 			
-			dc.Closing += delegate(object sender, CancelEventArgs e) 
+			dc.Closing += delegate(object sender, CancelEventArgs e)
 			{
 				this.VM.ActiveEditor.IsActive = false;
 				this.VM.Editors.Remove(bas.VM);

@@ -89,6 +89,9 @@
     <Reference Include="CmdLine">
       <HintPath>lib\CmdLine.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>lib\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>lib\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
@@ -254,10 +257,6 @@
     <Folder Include="ViewModel" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GongSolutions.Wpf.DragDrop\GongSolutions.Wpf.DragDrop.csproj">
-      <Project>{0C6674CC-6D49-414A-9B41-D4E175028FFB}</Project>
-      <Name>GongSolutions.Wpf.DragDrop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DXInstaller\DXInstaller.csproj">
       <Project>{4192BF11-5C93-48B5-BF04-47F4A56E0E0F}</Project>
       <Name>DXInstaller</Name>

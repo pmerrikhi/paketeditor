@@ -1,8 +1,8 @@
 ﻿<ToolBarTray x:Class="DXUnionPacket.UserControl.ToolBarTray"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
-	xmlns:dx="clr-namespace:DXUnionPacket"
+             xmlns:uc="clr-namespace:DXUnionPacket.UserControl"
+             xmlns:dx="clr-namespace:DXUnionPacket"
 >
 	<ToolBar	>
 		<Button
@@ -43,7 +43,7 @@
 		</Button>
 		<Button
 			DataContext="{uc:UICultureResource button_save_as}"
-			ToolTip="{Binding Path=Current}"	
+			ToolTip="{Binding Path=Current}"
 			Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dx:MainWindow}, Path=VM.SaveAsFileCommand}">
 			<Image
 				Source="../Images/SaveAll.png"
@@ -87,7 +87,9 @@
 				Source="../Images/Redo.png"
 				Height="16" />
 		</Button>
-		<Separator />
+	
+	</ToolBar>
+	<ToolBar>
 		<CheckBox
 			IsChecked="{Binding Path=ActiveEditor.IsWordWrap}">
 			<Image
@@ -101,16 +103,29 @@
 				TextAlignment="Center">#</TextBlock>
 		</CheckBox>
 		<CheckBox
-				IsChecked="{Binding Path=ActiveEditor.IsShowEndOfLine}">
-<!--			IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}"-->
+			IsChecked="{Binding Path=ActiveEditor.IsShowEndOfLine}">
 			<TextBlock
 				Width="16"
 				TextAlignment="Center">¶</TextBlock>
 		</CheckBox>
-	<!--	<ComboBox
+		<ComboBox
+			MinWidth="50"
 			Name="highlightingComboBox"
-			SelectedItem="{Binding SyntaxHighlighting, ElementName=textEditor}"
-			ItemsSource="{Binding Source={x:Static avedit:HighlightingManager.Instance}, Path=HighlightingDefinitions}"
-			SelectionChanged="HighlightingComboBox_SelectionChanged" />-->
+			SelectedItem="{Binding ActiveEditor.SyntaxHighlighting}"
+			ItemsSource="{Binding Path=HighlightingDefinitions}" />
+	</ToolBar>
+	<ToolBar>
+	
+		<ComboBox
+			MinWidth="50"
+			Name="fontBox"
+			SelectedItem="{Binding ActiveEditor.Font}"
+			ItemsSource="{Binding Path=Fonts}" />
+	
+		<ComboBox
+			MinWidth="50"
+			Name="fontSizeBox"
+			SelectedItem="{Binding ActiveEditor.FontSize}"
+			ItemsSource="{Binding Path=FontSizes}" />
 	</ToolBar>
 </ToolBarTray>

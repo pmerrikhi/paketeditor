@@ -77,30 +77,7 @@ namespace DXUnionPacket.UserControl
 		
 		string currentFileName;
 		
-		void openFileClick(object sender, RoutedEventArgs e)
-		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.CheckFileExists = true;
-			if (dlg.ShowDialog() ?? false) {
-				currentFileName = dlg.FileName;
-				textEditor.Load(currentFileName);
-				textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(currentFileName));
-			}
-		}
-		
-		void saveFileClick(object sender, EventArgs e)
-		{
-			if (currentFileName == null) {
-				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.DefaultExt = ".txt";
-				if (dlg.ShowDialog() ?? false) {
-					currentFileName = dlg.FileName;
-				} else {
-					return;
-				}
-			}
-			textEditor.Save(currentFileName);
-		}
+	
 		FoldingManager foldingManager;
 		AbstractFoldingStrategy foldingStrategy;
 		
@@ -109,7 +86,7 @@ namespace DXUnionPacket.UserControl
 			if (textEditor.SyntaxHighlighting == null) {
 				foldingStrategy = null;
 			} else {
-				switch (textEditor.SyntaxHighlighting.Name) {
+				switch (textEditor.SyntaxHighlighting) {
 					case "XML":
 						foldingStrategy = new XmlFoldingStrategy();
 						textEditor.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.DefaultIndentationStrategy();
@@ -149,13 +126,7 @@ namespace DXUnionPacket.UserControl
 		void TextEditor_KeyDown(object sender, KeyEventArgs e)
 		{
 			
-			if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemPlus)
-			{
-				textEditor.FontSize += 1;
-			}else if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
-			{
-				textEditor.FontSize -= 1;
-			}
+		
 		}
 	}
 }

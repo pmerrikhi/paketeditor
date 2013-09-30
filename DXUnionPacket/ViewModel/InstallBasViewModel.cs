@@ -119,7 +119,48 @@ namespace DXUnionPacket.ViewModel
 				}
 			}
 		}
-		
+		private string _font;
+		public string Font
+		{
+			get{
+				return _font;
+			}
+			set{
+				if(value != null && !value.Equals(_font))
+				{
+					_font = value;
+					this.OnPropertyChanged("Font");
+				}
+			}
+		}		
+		private double _fontSize;
+		public double FontSize
+		{
+			get{
+				return _fontSize;
+			}
+			set{
+				if(!value.Equals(_fontSize))
+				{
+					_fontSize = value;
+					this.OnPropertyChanged("FontSize");
+				}
+			}
+		}
+		private string _syntaxHighlighting;
+		public string SyntaxHighlighting
+		{
+			get{
+				return _syntaxHighlighting;
+			}
+			set{
+				if(value != null && !value.Equals(_syntaxHighlighting))
+				{
+					_syntaxHighlighting = value;
+					this.OnPropertyChanged("SyntaxHighlighting");
+				}
+			}
+		}
 		public InstallBasViewModel()
 		{
 		}

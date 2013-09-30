@@ -78,7 +78,7 @@ namespace DXUnionPacket.UserControl
 					this.VM.CurrentFileName = dlg.FileName;
 					this.VM.IsFile = true;
 					textEditor.Load(this.VM.CurrentFileName);
-					textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(this.VM.CurrentFileName));
+					textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(this.VM.CurrentFileName)).Name;
 				}
 			}
 		}

@@ -106,11 +106,10 @@
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			SyntaxHighlighting="VBNET"
-			FontSize="12pt"
+			FontSize="12"
 			FontFamily="Consolas"
 			TextChanged="TextEditor_TextChanged"
 			ShowLineNumbers="True"
-			KeyDown="TextEditor_KeyDown"
 		></uc:MvvmTextEditor>
 	</DockPanel>
 </UserControl >

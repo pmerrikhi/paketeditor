@@ -13,14 +13,13 @@
 		x:Name="textEditor"
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"
-		SyntaxHighlighting="VBNET"
-		FontSize="12pt"
-		FontFamily="Consolas"
+		SyntaxHighlighting="{Binding SyntaxHighlighting}"
+		FontSize="{Binding FontSize}"
+		FontFamily="{Binding Font}"
 		ShowEndOfLine="{Binding IsShowEndOfLine}"
 		ShowLineNumbersBindable="{Binding IsShowLineNumbers}"
 		WordWrapBindable="{Binding IsWordWrap}"
 		Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
-		
 		Drop="TextEditor_Drop"
 		KeyDown="TextEditor_KeyDown"
 	></uc:MvvmTextEditor>
